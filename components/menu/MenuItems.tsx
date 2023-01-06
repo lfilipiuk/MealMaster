@@ -9,9 +9,10 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 
 type Props = {
   showCalories: boolean;
+  meals: any;
 };
 
-const MenuItems = ({ showCalories }: Props) => {
+const MenuItems = ({ showCalories, meals }: Props) => {
   const { removeMenuItem, menuDate, setMenuItems, getMenuForDate, menuItems } =
     useMenu();
   const { modalOpen, setModalOpen, setCurrentStep } = useSteps();
@@ -22,15 +23,11 @@ const MenuItems = ({ showCalories }: Props) => {
     setModalOpen(true);
   }
 
-  useEffect(() => {
-    setMenuItems(getMenuForDate(menuDate));
-  }, [menuDate]);
-
   return (
     <>
       <ul className={"flex gap-7 flex-col my-5"}>
-        {menuItems.map((menuItem: any) => (
-          <li key={menuItem.type}>
+        {meals.map((menuItem: any) => (
+          <li key={menuItem.type + menuItem.name}>
             <MenuItem
               type={menuItem.type}
               name={menuItem.name}

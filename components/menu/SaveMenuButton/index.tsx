@@ -1,32 +1,29 @@
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useMutation } from "urql";
-import { SAVE_MENU_MUTATION } from "../../../utils/graphql/saveMenu";
 import { useMenu } from "../../../context/MenuContext";
 
 const SaveMenuButton = () => {
   const { user, error, isLoading } = useUser();
-  const [result, executeMutation] = useMutation(SAVE_MENU_MUTATION);
   const { menuDate, menuItems, getIdForDate } = useMenu();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  async function handleSave() {
+    const menu = {
+      userId: user?.email,
+      date: menuDate.toDateString(),
+      menu: menuItems,
+    };
 
-  async function handleSave(values: any) {
-    const id = getIdForDate(menuDate);
-    if (id !== "") {
-    } else {
-      const day = {
-        userId: user?.email,
-        date: menuDate.toDateString(),
-        menu: menuItems,
-      };
+    //use fetch api post
+    const response = await fetch(`/api/menus`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(menu),
+    });
 
-      const { data, error } = await executeMutation(day);
-      if (error) {
-        console.log(error);
-      }
-    }
+    const data = await response.json();
+    console.log(data);
   }
 
   return (
