@@ -12,16 +12,17 @@ import { FETCH_DAY } from "../utils/graphql/saveMenu";
 import { useMenu } from "../context/MenuContext";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import axios from "axios";
+import { GetStaticProps } from "next";
+import { getAllMeals } from "../utils/mongo/api-util";
 
 const { AnimatePresence } = require("framer-motion");
 
-export default function Home() {
+export default function Home({ data }: any) {
   const {
-    menuItems,
-    removeMenuItem,
     menuDate,
     setMenuDate,
     setMenuItems,
+    menuItems,
     setWholeMenu,
     getMenuForDate,
   } = useMenu();
@@ -39,32 +40,35 @@ export default function Home() {
 
   const formattedDate = menuDate.toDateString();
 
-  //TODO - results runs every time, even for not authenticated users. Need to fix this.
-  //Fetch menu for the day
-  const [results] = useQuery({
-    query: FETCH_DAY,
-    variables: { userId: user?.email },
-  });
+  useEffect(() => {
+    async function fetchMenus() {
+      const res = await fetch(`/api/menus/${user?.email}`);
+      const data = await res.json();
 
-  const { data, fetching, error } = results;
+      if (data && data.length > 0) {
+        //map menu to array
+        const mappedMenu = data.map((menu: any) => {
+          return {
+            id: menu._id,
+            date: menu.date,
+            menu: menu.menu,
+          };
+        });
+        setWholeMenu(mappedMenu);
+      }
+
+      console.log("userEmail", user?.email);
+    }
+    if (user) {
+      fetchMenus();
+    }
+  }, [user]);
 
   useEffect(() => {
-    if (data && data.days?.data.length > 0) {
-      //map menu to array
-      const mappedMenu = data.days?.data.map((day: any) => {
-        return {
-          id: day.id,
-          date: day.attributes.date,
-          menu: day.attributes.menu,
-        };
-      });
-      setMenuDate(menuDate);
-      setWholeMenu(mappedMenu);
-    }
-  }, [data, setMenuItems, setWholeMenu]);
+    setMenuItems(getMenuForDate(menuDate));
+  }, [menuDate]);
 
-  if (fetching) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
+  //TODO - figure out how to render meals and display them properly...
 
   return (
     <>
@@ -86,7 +90,7 @@ export default function Home() {
         <AnimatePresence>
           {calendarOpen && <Calendar onClose={() => setCalendarOpen(false)} />}
         </AnimatePresence>
-        <MenuItems showCalories={showCalories} />
+        <MenuItems showCalories={showCalories} meals={menuItems} />
         {!modalOpen && <SummaryButton />}
       </div>
 
@@ -94,19 +98,21 @@ export default function Home() {
         <AnimatePresence>
           {modalOpen && (
             <Modal handleClose={closeModal}>
-              <ModalContent />
+              <ModalContent meals={data} />
             </Modal>
           )}
         </AnimatePresence>
       </div>
 
       <div className={"flex gap-2"}>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           className={"p-2 w-16 bg-green text-white rounded-sm text-center"}
           href="/api/auth/login"
         >
           Login
         </a>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           className={"p-2 w-16 bg-gray-600 text-white rounded-sm text-center"}
           href="/api/auth/logout"
@@ -117,3 +123,14 @@ export default function Home() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const meals = await getAllMeals();
+
+  return {
+    props: {
+      data: meals,
+    },
+    revalidate: 30,
+  };
+};

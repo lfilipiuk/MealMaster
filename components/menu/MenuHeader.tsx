@@ -30,10 +30,10 @@ export function MenuHeader(props: {
           <div
             onClick={props.onCalendarClick}
             className={
-              "cursor-pointer hover:text-black transition-all duration-200 ease-in-out"
+              "cursor-pointer hover:text-black transition-all duration-200 ease-in-out w-3"
             }
           >
-            <FontAwesomeIcon className={"pb-0.5"} icon={faCalendar} />
+            <FontAwesomeIcon className={"pt-0.5"} icon={faCalendar} />
           </div>
         </div>
 

@@ -9,8 +9,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { useMenu } from "../../context/MenuContext";
-import { useMutation } from "urql";
-import { CREATE_MEAL_MUTATION } from "../../utils/graphql/createMeal";
 
 type Ingredient = {
   name: string;

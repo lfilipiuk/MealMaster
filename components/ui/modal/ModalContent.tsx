@@ -8,7 +8,11 @@ import Summary from "../../views/Summary";
 import MeetAI from "../../views/MeetAI";
 import MealIdeas from "../../views/MealIdeas";
 
-const ModalContent = () => {
+type Props = {
+  meals: any;
+};
+
+const ModalContent = ({ meals }: Props) => {
   const { currentStep } = useSteps();
   const { currentMenuItem } = useMenu();
 
@@ -16,7 +20,7 @@ const ModalContent = () => {
 
   switch (currentStep) {
     case MealActions.ADD_EDIT_MEAL:
-      content = <AddMeal type={currentMenuItem} />;
+      content = <AddMeal type={currentMenuItem} meals={meals} />;
       break;
     case MealActions.ADD_CUSTOM_MEAL:
       content = <CustomMeal />;
