@@ -1,0 +1,13 @@
+.inactive path{
+  stroke: #999FA3;
+}
+
+.inactive path:hover{
+  stroke: #7f8486;
+}
+
+.active path {
+  stroke: #14C030;
+}
+
+/*# sourceMappingURL=MealIcon.module.css.map */
