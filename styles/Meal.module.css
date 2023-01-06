@@ -1,0 +1,8 @@
+.iconHover path {
+  stroke: #999FA3;
+}
+.iconHover:hover path {
+  stroke: #000000;
+}
+
+/*# sourceMappingURL=Meal.module.css.map */

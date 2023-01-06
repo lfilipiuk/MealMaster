@@ -1,0 +1,11 @@
+
+.iconHover{
+  path {
+    stroke: #999FA3;
+  }
+  &:hover {
+    path {
+      stroke: #000000;
+    }
+  }
+}
