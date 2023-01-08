@@ -16,22 +16,9 @@ const AddMeal = ({ type, meals }: Props) => {
   const { menuItems } = useMenu();
   const { setModalOpen, setCurrentStep } = useSteps();
 
-  // const [meals, setMeals] = useState([]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await fetch("/api/meals");
-  //     const data = await res.json();
-  //     console.log("data", data);
-  //     setMeals(data);
-  //   }
-  //
-  //   fetchData();
-  // }, []);
-
   //this is code which decides title of modal: either add or edit
   const meal = menuItems.find((meal) => meal.type === type);
-  const editing = meal?.name !== "";
+  const editing = meal?.details.name !== "";
   const headerText = editing ? `Switch ${type} meal for...` : `Adding ${type}`;
 
   function closeModal() {
@@ -48,15 +35,13 @@ const AddMeal = ({ type, meals }: Props) => {
       >
         YOUR MEALS
       </h4>
-
       <div className={"flex flex-col justify-evenly"}>
         <div className={"flex flex-col gap-4"}>
           {meals &&
             meals.map((meal: any) => (
               <MealItem
                 key={meal._id}
-                name={meal.name}
-                kcal={meal.calories}
+                meal={meal.details}
                 onSelectMeal={closeModal}
               />
             ))}

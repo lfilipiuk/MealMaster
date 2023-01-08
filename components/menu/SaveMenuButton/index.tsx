@@ -32,6 +32,8 @@ const SaveMenuButton = () => {
     if (response.ok) {
       setIsSaving(false);
     }
+
+    setIsSaving(false);
   }
 
   return (

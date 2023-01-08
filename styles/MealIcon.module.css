@@ -1,9 +1,9 @@
-.inactive path{
+.inactive path {
   stroke: #999FA3;
 }
 
-.inactive path:hover{
-  stroke: #7f8486;
+.inactive:hover path {
+  stroke: #545454;
 }
 
 .active path {

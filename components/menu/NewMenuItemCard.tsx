@@ -38,8 +38,12 @@ const NewMenuItemCard = ({ onAdd }: Props) => {
     setSelectedMenuItem(filteredMenuItems[0]);
     addMenuItem({
       type: selectedMenuItem,
-      name: "",
-      calories: 0,
+      details: {
+        name: "",
+        calories: 0,
+        ingredients: [],
+        instructions: "",
+      },
       icon: selectedMenuIcon,
     });
 
@@ -71,7 +75,7 @@ const NewMenuItemCard = ({ onAdd }: Props) => {
               onClick={() => setSelectedMenuItem(item)}
               className={`text-xl cursor-pointer ${
                 selectedMenuItem === item ? "text-black" : "text-gray-400"
-              }`}
+              } hover:text-black transition-all duration-200 ease-in-out`}
             >
               {item}
             </h1>

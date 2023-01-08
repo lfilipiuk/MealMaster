@@ -4,6 +4,7 @@ export const MealActions = {
   CREATE_AI_MEAL: "CREATE_AI_MEAL",
   SUMMARY: "SUMMARY",
   AI_MEAL_IDEAS: "AI_MEAL_IDEAS",
+  SHOW_MEAL: "SHOW_MEAL_DETAILS",
 };
 
 const { Configuration, OpenAIApi } = require("openai");

@@ -14,8 +14,9 @@ type Props = {
   name: string;
   kcal: number;
   icon: string;
-  onClick: () => void;
-  onRemove: () => void;
+  onClick: (e: any, type: string, name: string) => void;
+  onEdit: (e: any, type: string, name: string) => void;
+  onRemove: (e: any, type: string) => void;
   showCalories: boolean;
 };
 
@@ -24,44 +25,26 @@ const MenuItem = ({
   name,
   kcal,
   icon,
+  onEdit,
   onClick,
   onRemove,
   showCalories,
 }: Props) => {
-  const { setCurrentMenuItem } = useMenu();
-  const [itemIsSelected, setItemIsSelected] = useState(false);
-  const { setCurrentStep, setModalOpen } = useSteps();
-
-  useEffect(() => {
-    setItemIsSelected(name !== "");
-  }, [name]);
-
-  const handleMealClick = () => {
-    setItemIsSelected(name !== "");
-    setCurrentMenuItem(type);
-    onClick();
-  };
-
-  function editMeal() {
-    setCurrentMenuItem(type);
-    setCurrentStep(MealActions.ADD_EDIT_MEAL);
-    setModalOpen(true);
-  }
-
-  function handleRemove(e: any) {
-    e.stopPropagation();
-    onRemove();
-  }
+  //This will evaluate to true if name is undefined, null, or an empty string.
+  const emptyMenuItem = !name;
 
   return (
     <div
-      onClick={handleMealClick}
+      onClick={(e) => onClick(e, type, name)}
       className={
         "text-gray-600 bg-white h-28 rounded-lg py-2 px-4 font-primary shadow-lg shadow-gray-200 hover:shadow-gray-300 hover:text-black transition-all duration-500 ease-in-out cursor-pointer"
       }
     >
       <div className={"flex flex-col justify-between"}>
-        <MenuIcon icon={icon} active={itemIsSelected} />
+        <div className={"pointer-events-none"}>
+          <MenuIcon icon={icon} active={!emptyMenuItem} />
+        </div>
+
         <p
           className={
             "text-gray-400 font-proxima font-semibold text-sm uppercase tracking-wider pt-5"
@@ -72,7 +55,7 @@ const MenuItem = ({
 
         <div className={"flex justify-between items-end"}>
           <div className={"flex flex-row items-center gap-1 cursor-pointer"}>
-            {!itemIsSelected ? (
+            {emptyMenuItem ? (
               <>
                 <FontAwesomeIcon icon={faPlus} width={12} />
                 <h2 className={"text-center text-lg"}>Add {type}</h2>
@@ -88,12 +71,12 @@ const MenuItem = ({
           </div>
 
           <div className={"flex gap-2 items-center text-gray-400"}>
-            {itemIsSelected && (
+            {!emptyMenuItem && (
               <div
                 className={
                   "pb-2 cursor-pointer hover:text-gray-600 transition-all duration-100 ease-in-out"
                 }
-                onClick={editMeal}
+                onClick={(e) => onEdit(e, type, name)}
               >
                 <FontAwesomeIcon icon={faArrowsRotate} width={15} />
               </div>
@@ -103,7 +86,8 @@ const MenuItem = ({
               className={
                 "pb-2 cursor-pointer hover:text-gray-600 transition-all duration-100 ease-in-out"
               }
-              onClick={handleRemove}
+              onClick={(e) => onRemove(e, type)}
+              datatype={type}
             >
               <FontAwesomeIcon icon={faTrashCan} width={15} />
             </div>

@@ -13,15 +13,36 @@ type Props = {
 };
 
 const MenuItems = ({ showCalories, meals }: Props) => {
-  const { removeMenuItem, menuDate, setMenuItems, getMenuForDate, menuItems } =
-    useMenu();
-  const { modalOpen, setModalOpen, setCurrentStep } = useSteps();
+  const { removeMenuItem, setCurrentMenuItem } = useMenu();
+  const { setModalOpen, setCurrentStep } = useSteps();
   const { user, error: userError, isLoading } = useUser();
 
-  function openModal() {
+  const handleAddEditMenu = (e: any) => {
+    e.stopPropagation();
     setCurrentStep(MealActions.ADD_EDIT_MEAL);
     setModalOpen(true);
-  }
+  };
+
+  const handleRemoveMenu = (e: MouseEvent, type: string) => {
+    e.stopPropagation();
+    removeMenuItem(type);
+  };
+
+  const handleEditMenu = (e: MouseEvent, type: string) => {
+    e.stopPropagation();
+    setCurrentStep(MealActions.ADD_EDIT_MEAL);
+    setCurrentMenuItem(type);
+    setModalOpen(true);
+  };
+
+  const handleMenuItemClick = (e: MouseEvent, type: string, name: string) => {
+    e.stopPropagation();
+    name !== ""
+      ? setCurrentStep(MealActions.SHOW_MEAL)
+      : setCurrentStep(MealActions.ADD_EDIT_MEAL);
+    setCurrentMenuItem(type);
+    setModalOpen(true);
+  };
 
   return (
     <>
@@ -30,11 +51,12 @@ const MenuItems = ({ showCalories, meals }: Props) => {
           <li key={menuItem.type + menuItem.name}>
             <MenuItem
               type={menuItem.type}
-              name={menuItem.name}
-              kcal={menuItem.calories}
+              name={menuItem.details.name}
+              kcal={menuItem.details.calories}
               icon={menuItem.icon as string}
-              onClick={openModal}
-              onRemove={() => removeMenuItem(menuItem.type)}
+              onClick={handleMenuItemClick}
+              onEdit={handleEditMenu}
+              onRemove={handleRemoveMenu}
               showCalories={showCalories}
             />
           </li>

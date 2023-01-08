@@ -4,12 +4,16 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { useMenu } from "../../context/MenuContext";
 
 type Props = {
-  name: string;
-  kcal?: number;
+  meal: {
+    name: string;
+    calories: number;
+    ingredients: string[];
+    instructions: string;
+  };
   onSelectMeal: () => void;
 };
 
-const MealItem = ({ name, kcal = 0, onSelectMeal }: Props) => {
+const MealItem = ({ meal, onSelectMeal }: Props) => {
   const mealsContext = useMenu();
 
   //this code is reused...
@@ -17,8 +21,12 @@ const MealItem = ({ name, kcal = 0, onSelectMeal }: Props) => {
     const { setCurrentMenuItem, currentMenuItem, setMenuItem } = mealsContext;
     setMenuItem({
       type: currentMenuItem,
-      name,
-      calories: kcal,
+      details: {
+        name: meal.name,
+        calories: meal.calories,
+        ingredients: meal.ingredients,
+        instructions: meal.instructions,
+      },
     });
     setCurrentMenuItem(currentMenuItem);
     onSelectMeal();
@@ -32,8 +40,10 @@ const MealItem = ({ name, kcal = 0, onSelectMeal }: Props) => {
       onClick={handleMealSelect}
     >
       <div className={"flex gap-2 "}>
-        <h1 className={"text-lg"}>{name}</h1>
-        {kcal !== 0 && <h2 className={"text-lg text-gray-400"}>{kcal} kcal</h2>}
+        <h1 className={"text-lg"}>{meal.name}</h1>
+        {meal.calories !== 0 && (
+          <h2 className={"text-lg text-gray-400"}>{meal.calories} kcal</h2>
+        )}
       </div>
       <div className={"text-gray-400"}>
         <FontAwesomeIcon icon={faAngleRight} width={10} />
