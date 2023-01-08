@@ -18,6 +18,7 @@ const { AnimatePresence } = require("framer-motion");
 
 //FIXME: there is a problem, when I save the menu, new menus aren't fetched from the database
 //TODO: loading screen when fetching data from the database
+//TODO: login screen + ask for name (or get from Auth0)
 
 export default function Home({ data }: any) {
   const {
@@ -102,12 +103,15 @@ export default function Home({ data }: any) {
           disabled={modalOpen}
           onCalendarClick={() => setCalendarOpen(true)}
         />
+
         <AnimatePresence>
           {calendarOpen && (
             <Calendar onClose={() => setCalendarOpen(false)} value={menuDate} />
           )}
         </AnimatePresence>
         <MenuItems showCalories={showCalories} meals={menuItems} />
+
+        {/* TODO: buttons in a relative/absolute section */}
         {!modalOpen && (
           <>
             <LogoutButton /> <SummaryButton />
@@ -126,8 +130,8 @@ export default function Home({ data }: any) {
       </div>
 
       <div className={"flex gap-2"}>
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         {!user && (
+          // eslint-disable-next-line @next/next/no-html-link-for-pages
           <a
             className={"p-2 w-16 bg-green text-white rounded-sm text-center"}
             href="/api/auth/login"

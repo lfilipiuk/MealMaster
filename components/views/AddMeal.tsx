@@ -6,6 +6,7 @@ import Divider from "../ui/other/Divider";
 import { useMenu } from "../../context/MenuContext";
 import { useSteps } from "../../context/StepContext";
 import { MealActions } from "../../utils/constants";
+import { useMeal } from "../../context/MealContext";
 
 type Props = {
   type: string;
@@ -15,15 +16,17 @@ type Props = {
 const AddMeal = ({ type, meals }: Props) => {
   const { menuItems } = useMenu();
   const { setModalOpen, setCurrentStep } = useSteps();
+  const { setSelectedMeal } = useMeal();
 
   //this is code which decides title of modal: either add or edit
   const meal = menuItems.find((meal) => meal.type === type);
   const editing = meal?.details.name !== "";
   const headerText = editing ? `Switch ${type} meal for...` : `Adding ${type}`;
 
-  function closeModal() {
-    setModalOpen(false);
-  }
+  const selectMealHandler = (meal: any) => {
+    setSelectedMeal(meal);
+    setCurrentStep(MealActions.SHOW_MEAL_DETAILS);
+  };
 
   return (
     <div className={"font-proxima"}>
@@ -42,7 +45,7 @@ const AddMeal = ({ type, meals }: Props) => {
               <MealItem
                 key={meal._id}
                 meal={meal.details}
-                onSelectMeal={closeModal}
+                onSelectMeal={() => selectMealHandler(meal)}
               />
             ))}
           <CustomMealButton

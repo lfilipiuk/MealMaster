@@ -18,17 +18,6 @@ const MealItem = ({ meal, onSelectMeal }: Props) => {
 
   //this code is reused...
   const handleMealSelect = () => {
-    const { setCurrentMenuItem, currentMenuItem, setMenuItem } = mealsContext;
-    setMenuItem({
-      type: currentMenuItem,
-      details: {
-        name: meal.name,
-        calories: meal.calories,
-        ingredients: meal.ingredients,
-        instructions: meal.instructions,
-      },
-    });
-    setCurrentMenuItem(currentMenuItem);
     onSelectMeal();
   };
 
