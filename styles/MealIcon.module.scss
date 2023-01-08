@@ -4,6 +4,12 @@
   }
 }
 
+.inactive:hover {
+  path {
+    stroke: #545454;
+  }
+}
+
 .active {
   path {
     stroke: #14C030;

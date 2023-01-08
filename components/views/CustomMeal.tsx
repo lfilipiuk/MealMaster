@@ -34,10 +34,12 @@ const CustomMeal = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: values.name,
-        calories: values.calories,
-        ingredients: values.ingredients,
-        instructions: values.instructions,
+        details: {
+          name: values.name,
+          calories: values.calories,
+          ingredients: values.ingredients,
+          instructions: values.instructions,
+        },
         created: "manual",
       }),
     });
@@ -48,8 +50,12 @@ const CustomMeal = () => {
   async function handleSaveAndAdd(values: any) {
     setMenuItem({
       type: currentMenuItem,
-      name: values.name,
-      calories: values.calories,
+      details: {
+        name: values.name,
+        calories: values.calories,
+        ingredients: values.ingredients,
+        instructions: values.instructions,
+      },
     });
     await handleSave(values);
     setCurrentMenuItem(currentMenuItem);

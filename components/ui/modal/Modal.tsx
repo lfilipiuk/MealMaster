@@ -48,7 +48,7 @@ const Modal = ({ handleClose, children }: Props) => {
           exit="exit"
           variants={dropIn}
           className={
-            "w-1/2 h-auto bg-white rounded-xl mx-auto my-auto px-2 border-gray-600 border-2 relative transition-all duration-500 ease-in-out"
+            "2xl:w-1/3 w-1/2 h-auto bg-white rounded-xl mx-auto my-auto px-2 border-gray-600 border-2 relative transition-all duration-500 ease-in-out"
           }
           onClick={(e: { stopPropagation: () => any }) => e.stopPropagation()}
         >

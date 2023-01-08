@@ -7,18 +7,17 @@ import ModalContent from "../components/ui/modal/ModalContent";
 import Calendar from "../components/calendar/Calendar";
 import { MenuHeader } from "../components/menu/MenuHeader";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "urql";
-import { FETCH_DAY } from "../utils/graphql/saveMenu";
 import { useMenu } from "../context/MenuContext";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import axios from "axios";
 import { GetStaticProps } from "next";
 import { getAllMeals } from "../utils/mongo/api-util";
 import { DUMMY_MENU } from "../utils/DUMMY_MENU";
+import { LogoutButton } from "../components/ui/buttons/LogoutButton";
 
 const { AnimatePresence } = require("framer-motion");
 
 //FIXME: there is a problem, when I save the menu, new menus aren't fetched from the database
+//TODO: loading screen when fetching data from the database
 
 export default function Home({ data }: any) {
   const {
@@ -59,8 +58,6 @@ export default function Home({ data }: any) {
         });
         setWholeMenu(mappedMenu);
 
-        console.log(mappedMenu);
-
         //get menu for current date
         //FIXME: im getting menu for date here and in useEffect below
         // there should be one function for that
@@ -72,12 +69,15 @@ export default function Home({ data }: any) {
         } else {
           setMenuItems(DUMMY_MENU);
         }
+
+        return data;
       }
 
-      console.log("userEmail", user?.email);
+      return data;
     }
+
     if (user) {
-      fetchMenus();
+      fetchMenus().then(() => {});
     }
   }, [user]);
 
@@ -108,14 +108,18 @@ export default function Home({ data }: any) {
           )}
         </AnimatePresence>
         <MenuItems showCalories={showCalories} meals={menuItems} />
-        {!modalOpen && <SummaryButton />}
+        {!modalOpen && (
+          <>
+            <LogoutButton /> <SummaryButton />
+          </>
+        )}
       </div>
 
       <div className={"h-full w-screen"}>
         <AnimatePresence>
           {modalOpen && (
             <Modal handleClose={closeModal}>
-              <ModalContent meals={data} />
+              <ModalContent meals={data} menu={menuItems} />
             </Modal>
           )}
         </AnimatePresence>
@@ -123,19 +127,14 @@ export default function Home({ data }: any) {
 
       <div className={"flex gap-2"}>
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a
-          className={"p-2 w-16 bg-green text-white rounded-sm text-center"}
-          href="/api/auth/login"
-        >
-          Login
-        </a>
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a
-          className={"p-2 w-16 bg-gray-600 text-white rounded-sm text-center"}
-          href="/api/auth/logout"
-        >
-          Logout
-        </a>
+        {!user && (
+          <a
+            className={"p-2 w-16 bg-green text-white rounded-sm text-center"}
+            href="/api/auth/login"
+          >
+            Login
+          </a>
+        )}
       </div>
     </>
   );

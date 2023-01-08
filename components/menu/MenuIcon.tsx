@@ -19,26 +19,26 @@ const MenuIcon = ({ icon, active = false }: Props) => {
 
   switch (icon) {
     case "Croissant":
-      mealIcon = <Croissant width={30} height={30} className={style} />;
+      mealIcon = <Croissant width={30} height={30} />;
       break;
     case "Donut":
-      mealIcon = <Donut width={30} height={30} className={style} />;
+      mealIcon = <Donut width={30} height={30} />;
       break;
     case "Eggs":
-      mealIcon = <Eggs width={30} height={30} className={style} />;
+      mealIcon = <Eggs width={30} height={30} />;
       break;
     case "Turkey":
-      mealIcon = <Turkey width={30} height={30} className={style} />;
+      mealIcon = <Turkey width={30} height={30} />;
       break;
     case "Salad":
-      mealIcon = <Salad width={30} height={30} className={style} />;
+      mealIcon = <Salad width={30} height={30} />;
       break;
     default:
-      mealIcon = <Eggs width={30} height={30} className={style} />;
+      mealIcon = <Eggs width={30} height={30} />;
       break;
   }
 
-  return <div>{mealIcon}</div>;
+  return <div className={style}>{mealIcon}</div>;
 };
 
 export default MenuIcon;

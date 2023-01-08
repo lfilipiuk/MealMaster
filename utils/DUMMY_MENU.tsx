@@ -1,32 +1,52 @@
 export const DUMMY_MENU = [
   {
     type: "Breakfast",
-    name: "",
-    calories: 0,
+    details: {
+      name: "",
+      calories: 0,
+      ingredients: [],
+      instructions: "",
+    },
     icon: "Eggs",
   },
   {
     type: "Snack",
-    name: "",
-    calories: 0,
+    details: {
+      name: "",
+      calories: 0,
+      ingredients: [],
+      instructions: "",
+    },
     icon: "Croissant",
   },
   {
     type: "Lunch",
-    name: "",
-    calories: 0,
+    details: {
+      name: "",
+      calories: 0,
+      ingredients: [],
+      instructions: "",
+    },
     icon: "Turkey",
   },
   {
     type: "Snack II",
-    name: "",
-    calories: 0,
+    details: {
+      name: "",
+      calories: 0,
+      ingredients: [],
+      instructions: "",
+    },
     icon: "Donut",
   },
   {
     type: "Dinner",
-    name: "",
-    calories: 0,
+    details: {
+      name: "",
+      calories: 0,
+      ingredients: [],
+      instructions: "",
+    },
     icon: "Salad",
   },
 ];

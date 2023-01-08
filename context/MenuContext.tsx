@@ -1,18 +1,22 @@
 import React, { createContext, useContext, useState } from "react";
 import { DUMMY_MENU } from "../utils/DUMMY_MENU";
-import { formatDate, getStrippedDate } from "../utils/functions";
+import { getStrippedDate } from "../utils/functions";
 
 export interface MenuItem {
   type: string;
-  name: string;
-  calories: number;
+  details: {
+    name: string;
+    calories: number;
+    ingredients: string[];
+    instructions: string;
+  };
   icon?: string;
 }
 
 export interface MenuDay {
   id: string;
   date: string;
-  menu: MenuItem[];
+  details: MenuItem[];
 }
 
 export interface MenuContextValue {
@@ -65,6 +69,7 @@ export function MenuProvider({ children }: Props) {
   );
   const [currentMenuItem, setCurrentMenuItem] = useState<string>("");
 
+  //TODO: custom sort order for menu items
   function addMenuItem(meal: MenuItem) {
     setMenuItems([...menuItems, meal]);
   }
@@ -78,8 +83,7 @@ export function MenuProvider({ children }: Props) {
       if (menuItem.type === newMenuItem.type) {
         return {
           ...menuItem,
-          name: newMenuItem.name,
-          calories: newMenuItem.calories,
+          details: newMenuItem.details,
         };
       }
       return menuItem;
