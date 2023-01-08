@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSteps } from "../../../context/StepContext";
 import { useMenu } from "../../../context/MenuContext";
 import AddMeal from "../../views/AddMeal";
@@ -8,15 +8,19 @@ import Summary from "../../views/Summary";
 import MeetAI from "../../views/MeetAI";
 import MealIdeas from "../../views/MealIdeas";
 import MealDetails from "../../meals/MealDetails";
+import { useMeal } from "../../../context/MealContext";
 
 type Props = {
   meals: any;
   menu: any;
 };
 
+//ModalContent can be used to store selected meal details
+
 const ModalContent = ({ meals, menu }: Props) => {
-  const { currentStep } = useSteps();
+  const { currentStep, setCurrentStep, setModalOpen } = useSteps();
   const { currentMenuItem } = useMenu();
+  const { selectedMeal } = useMeal();
 
   let content;
 
@@ -36,15 +40,25 @@ const ModalContent = ({ meals, menu }: Props) => {
     case MealActions.AI_MEAL_IDEAS:
       content = <MealIdeas />;
       break;
-    case MealActions.SHOW_MEAL:
-      const meal = menu.find((meal: any) => meal.type === currentMenuItem);
-      const { name, calories, instructions, ingredients } = meal.details;
+    case MealActions.SHOW_MEAL_IN_MENU:
+      const menuItem = menu.find((item: any) => item.type === currentMenuItem);
       content = (
         <MealDetails
-          name={name}
-          calories={calories}
-          ingredients={ingredients}
-          instructions={instructions}
+          name={menuItem.details.name}
+          calories={menuItem.details.calories}
+          ingredients={menuItem.details.ingredients}
+          instructions={menuItem.details.instructions}
+        />
+      );
+      break;
+    case MealActions.SHOW_MEAL_DETAILS:
+      content = (
+        <MealDetails
+          name={selectedMeal.details.name}
+          calories={selectedMeal.details.calories}
+          ingredients={selectedMeal.details.ingredients as any}
+          instructions={selectedMeal.details.instructions}
+          button={true}
         />
       );
       break;

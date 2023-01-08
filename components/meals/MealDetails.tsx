@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMenu } from "../../context/MenuContext";
 import BackButton from "../ui/buttons/BackButton";
+import { useSteps } from "../../context/StepContext";
+import { MealActions } from "../../utils/constants";
 
 type Props = {
   name: string;
@@ -21,14 +23,35 @@ const MealDetails = ({
   calories,
   instructions,
   ingredients,
-  button = true,
+  button = false,
 }: Props) => {
-  const { currentMenuItem } = useMenu();
+  const { setCurrentMenuItem, currentMenuItem, setMenuItem } = useMenu();
+  const { setCurrentStep, setModalOpen } = useSteps();
+
+  const addMealHandler = () => {
+    setMenuItem({
+      type: currentMenuItem,
+      details: {
+        name: name as string,
+        calories: calories as number,
+        ingredients: ingredients as any,
+        instructions: instructions as string,
+      },
+    });
+    setCurrentMenuItem(currentMenuItem);
+    setModalOpen(false);
+  };
 
   return (
     <div>
       <div className={"flex gap-1 items-center"}>
-        <BackButton onClick={() => {}} />
+        {button && (
+          <BackButton
+            onClick={() => {
+              setCurrentStep(MealActions.ADD_EDIT_MEAL);
+            }}
+          />
+        )}
         <h1 className={"text-2xl text-black font-bold"}>{name}</h1>
       </div>
 
@@ -68,6 +91,7 @@ const MealDetails = ({
 
       {button && (
         <button
+          onClick={() => addMealHandler()}
           className={
             "bg-green text-white font-semibold py-4 rounded mt-4 w-full text-xl hover:bg-green-dark transition-all duration-200 ease-in-out"
           }

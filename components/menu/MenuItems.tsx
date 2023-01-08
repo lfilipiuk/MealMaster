@@ -38,7 +38,7 @@ const MenuItems = ({ showCalories, meals }: Props) => {
   const handleMenuItemClick = (e: MouseEvent, type: string, name: string) => {
     e.stopPropagation();
     name !== ""
-      ? setCurrentStep(MealActions.SHOW_MEAL)
+      ? setCurrentStep(MealActions.SHOW_MEAL_IN_MENU)
       : setCurrentStep(MealActions.ADD_EDIT_MEAL);
     setCurrentMenuItem(type);
     setModalOpen(true);

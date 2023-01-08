@@ -2,13 +2,6 @@ import React, { createContext, useContext } from "react";
 import { useState } from "react";
 import { DUMMY_IDEAS } from "../utils/DUMMY_IDEAS";
 
-// export interface MealIdea {
-//   name: string;
-//   calories: number;
-//   ingredients?: any[];
-//   instructions?: string;
-// }
-
 const ChefContext = createContext({
   searchValue: "",
   setSearchValue: (value: string) => {},
