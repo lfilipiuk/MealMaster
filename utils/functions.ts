@@ -21,3 +21,11 @@ export function formatDate(date: Date): string {
 
   return `${year}-${month}-${day}`;
 }
+
+export function getStrippedDate(date: Date): Date {
+  const year = date.getFullYear();
+  let month: number = date.getMonth();
+  let day: number = date.getDate();
+
+  return new Date(year, month, day);
+}

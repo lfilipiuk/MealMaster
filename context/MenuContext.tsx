@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { DUMMY_MENU } from "../utils/DUMMY_MENU";
-import { formatDate } from "../utils/functions";
+import { formatDate, getStrippedDate } from "../utils/functions";
 
 export interface MenuItem {
   type: string;
@@ -27,12 +27,12 @@ export interface MenuContextValue {
   setMenuItems: (menuItems: MenuItem[]) => void;
   wholeMenu: MenuDay[];
   setWholeMenu: (menu: MenuDay[]) => void;
-  getMenuForDate: (date: Date) => MenuItem[];
+  getMenuForDate: (date: Date) => { id: string; menu: MenuItem[] };
   getIdForDate: (date: Date) => string;
 }
 
 const initialValue: MenuContextValue = {
-  menuDate: new Date(),
+  menuDate: getStrippedDate(new Date()),
   setMenuDate: (date: Date) => {},
   menuItems: DUMMY_MENU,
   addMenuItem: () => {},
@@ -43,7 +43,7 @@ const initialValue: MenuContextValue = {
   setMenuItems: () => {},
   wholeMenu: [],
   setWholeMenu: () => {},
-  getMenuForDate: () => [],
+  getMenuForDate: () => ({ id: "", menu: [] }),
   getIdForDate: () => "",
 };
 
@@ -59,7 +59,7 @@ type Props = {
 
 export function MenuProvider({ children }: Props) {
   const [wholeMenu, setWholeMenu] = useState<MenuDay[]>(initialValue.wholeMenu);
-  const [menuDate, setMenuDate] = useState(new Date());
+  const [menuDate, setMenuDate] = useState(initialValue.menuDate);
   const [menuItems, setMenuItems] = useState<MenuItem[]>(
     initialValue.menuItems
   );
@@ -95,9 +95,15 @@ export function MenuProvider({ children }: Props) {
     );
 
     if (menuForDay) {
-      return menuForDay.menu;
+      return {
+        id: menuForDay.id,
+        menu: menuForDay.menu,
+      };
     } else {
-      return DUMMY_MENU;
+      return {
+        id: "",
+        menu: DUMMY_MENU,
+      };
     }
   }
 

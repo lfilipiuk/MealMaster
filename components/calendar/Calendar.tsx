@@ -2,20 +2,21 @@ import React from "react";
 import ReactCalendar from "react-calendar";
 import styled from "styled-components";
 import { useMenu } from "../../context/MenuContext";
-import { formatDate } from "../../utils/functions";
+import { formatDate, getStrippedDate } from "../../utils/functions";
 import Backdrop from "../ui/modal/Backdrop";
 import { useSteps } from "../../context/StepContext";
 
 type Props = {
   onClose: () => void;
+  value: Date;
 };
 
-const Calendar = ({ onClose }: Props) => {
+const Calendar = ({ onClose, value }: Props) => {
   const { menuDate, setMenuDate } = useMenu();
   const { setModalOpen } = useSteps();
 
   const handleDateChange = (date: Date) => {
-    setMenuDate(date);
+    setMenuDate(getStrippedDate(date));
     onClose();
   };
 
@@ -31,7 +32,7 @@ const Calendar = ({ onClose }: Props) => {
           locale={"en-GB"}
           className={"REACT-CALENDAR shadow-lg"}
           onClickDay={(date) => handleDateChange(date)}
-          value={menuDate}
+          value={value}
         />
       </div>
     </Backdrop>
