@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { ShowCaloriesToggle } from "./ShowCaloriesToggle";
 import React from "react";
-import Calendar from "../calendar/Calendar";
 
 export function MenuHeader(props: {
   formattedDate: string;

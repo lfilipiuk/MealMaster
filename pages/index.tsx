@@ -14,8 +14,11 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import axios from "axios";
 import { GetStaticProps } from "next";
 import { getAllMeals } from "../utils/mongo/api-util";
+import { DUMMY_MENU } from "../utils/DUMMY_MENU";
 
 const { AnimatePresence } = require("framer-motion");
+
+//FIXME: there is a problem, when I save the menu, new menus aren't fetched from the database
 
 export default function Home({ data }: any) {
   const {
@@ -55,6 +58,20 @@ export default function Home({ data }: any) {
           };
         });
         setWholeMenu(mappedMenu);
+
+        console.log(mappedMenu);
+
+        //get menu for current date
+        //FIXME: im getting menu for date here and in useEffect below
+        // there should be one function for that
+        const menuForDate = mappedMenu.find(
+          (menu: any) => menu.date === formattedDate
+        );
+        if (menuForDate) {
+          setMenuItems(menuForDate.menu);
+        } else {
+          setMenuItems(DUMMY_MENU);
+        }
       }
 
       console.log("userEmail", user?.email);
@@ -65,10 +82,8 @@ export default function Home({ data }: any) {
   }, [user]);
 
   useEffect(() => {
-    setMenuItems(getMenuForDate(menuDate));
+    setMenuItems(getMenuForDate(menuDate).menu);
   }, [menuDate]);
-
-  //TODO - figure out how to render meals and display them properly...
 
   return (
     <>
@@ -88,7 +103,9 @@ export default function Home({ data }: any) {
           onCalendarClick={() => setCalendarOpen(true)}
         />
         <AnimatePresence>
-          {calendarOpen && <Calendar onClose={() => setCalendarOpen(false)} />}
+          {calendarOpen && (
+            <Calendar onClose={() => setCalendarOpen(false)} value={menuDate} />
+          )}
         </AnimatePresence>
         <MenuItems showCalories={showCalories} meals={menuItems} />
         {!modalOpen && <SummaryButton />}

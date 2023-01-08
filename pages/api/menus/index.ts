@@ -5,6 +5,7 @@ import {
   getAllDocuments,
   insertDocument,
 } from "../../../utils/mongo/db-util";
+import { ObjectId } from "mongodb";
 
 // Replace with your database name
 const dbName = "mealmaster";
@@ -21,17 +22,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // Connect to the database
     const db = await connectDatabase(client, dbName);
 
+    // Get a handle on collection
+    const collection = db.collection(collectionName);
+
     if (req.method === "POST") {
       // Add a new meal
-      const menu = req.body;
-      await insertDocument(db, collectionName, menu);
+      const { id, menu, userId, date } = req.body;
 
-      res.json(menu);
+      // Create or update a meal
+      const filter = { _id: new ObjectId(id) };
+      const update = { $set: { userId: userId, date: date, menu: menu } };
+      const options = { upsert: true };
+
+      console.log("trying to insert", id, menu);
+
+      const result = await collection.updateOne(filter, update, options);
+
+      console.log("inserted", result);
+
+      res.status(201).json(result);
     } else if (req.method === "GET") {
       // Find all documents in the collection
       const menus = await getAllDocuments(db, collectionName);
 
-      res.json(menus);
+      res.status(200).json(menus);
     } else {
       res.status(405).send({ message: "Method Not Allowed" });
     }
