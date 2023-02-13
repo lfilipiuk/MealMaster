@@ -35,14 +35,14 @@ const dropIn = {
 };
 
 const Modal = ({ handleClose, children }: Props) => {
-  const { currentStep } = useSteps();
+  const { getCurrentStep } = useSteps();
 
   //TODO: Icon inside modalcontent maybe?
   return (
     <AnimatePresence>
       <Backdrop onClick={handleClose}>
         <motion.div
-          key={currentStep}
+          key={getCurrentStep}
           initial="hidden"
           animate="visible"
           exit="exit"

@@ -13,7 +13,6 @@ import { GetStaticProps } from "next";
 import { getAllMeals } from "../utils/mongo/api-util";
 import { DUMMY_MENU } from "../utils/DUMMY_MENU";
 import { LogoutButton } from "../components/ui/buttons/LogoutButton";
-
 const { AnimatePresence } = require("framer-motion");
 
 //FIXME: there is a problem, when I save the menu, new menus aren't fetched from the database
@@ -23,7 +22,6 @@ const { AnimatePresence } = require("framer-motion");
 //TODO: autosave + autoload
 //TODO: useMemo i useCallback
 //TODO: form display ingredients correctly
-//TODO: AI save suggestions correctly...
 //FIXME: when I add a new day, it overwrites the data
 //TODO: shopping list
 //TODO: have AI simplify shopping list on user request
@@ -37,17 +35,10 @@ export default function Home({ data }: any) {
     setWholeMenu,
     getMenuForDate,
   } = useMenu();
-  const { modalOpen, setModalOpen, setCurrentStep } = useSteps();
+  const { modalOpen, closeModal, steps } = useSteps();
   const [showCalories, setShowCalories] = useState(false);
   const { user, error: userError, isLoading } = useUser();
   const [calendarOpen, setCalendarOpen] = useState(false);
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  const openModal = () => {
-    setModalOpen(true);
-  };
 
   const formattedDate = menuDate.toDateString();
 
@@ -102,6 +93,15 @@ export default function Home({ data }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {/*//This is only for development purposes*/}
+      <div className={"fixed left-0 top-0"}>
+        <ol>
+          {steps.map((step) => {
+            return <li key={step}>{step}</li>;
+          })}
+        </ol>
+      </div>
 
       <div className={"max-w-lg mx-auto my-16 flex flex-col"}>
         <MenuHeader

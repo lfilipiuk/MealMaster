@@ -4,17 +4,18 @@ import { useSteps } from "../../../context/StepContext";
 import { MealActions } from "../../../utils/constants";
 
 const SummaryButton = () => {
-  const { setModalOpen, setCurrentStep } = useSteps();
+  const { openModal, setStep } = useSteps();
+  const { SUMMARY } = MealActions;
 
-  function openModal() {
-    setCurrentStep(MealActions.SUMMARY);
-    setModalOpen(true);
+  function handleClick() {
+    setStep(SUMMARY);
+    openModal();
   }
 
   return (
     <div className={"fixed right-10 bottom-28"}>
       <div
-        onClick={openModal}
+        onClick={handleClick}
         className={
           "bg-green h-14 w-14 rounded-full flex items-center justify-center cursor-pointer hover:bg-green-dark transition duration-300 ease-in-out"
         }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useMenu } from "../../context/MenuContext";
 import BackButton from "../ui/buttons/BackButton";
 import { useSteps } from "../../context/StepContext";
@@ -26,7 +26,7 @@ const MealDetails = ({
   button = false,
 }: Props) => {
   const { setCurrentMenuItem, currentMenuItem, setMenuItem } = useMenu();
-  const { setCurrentStep, setModalOpen } = useSteps();
+  const { closeModal } = useSteps();
 
   const addMealHandler = () => {
     setMenuItem({
@@ -39,19 +39,13 @@ const MealDetails = ({
       },
     });
     setCurrentMenuItem(currentMenuItem);
-    setModalOpen(false);
+    closeModal();
   };
 
   return (
     <div>
       <div className={"flex gap-1 items-center"}>
-        {button && (
-          <BackButton
-            onClick={() => {
-              setCurrentStep(MealActions.ADD_EDIT_MEAL);
-            }}
-          />
-        )}
+        {button && <BackButton />}
         <h1 className={"text-2xl text-black font-bold"}>{name}</h1>
       </div>
 

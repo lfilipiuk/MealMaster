@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import BackButton from "../ui/buttons/BackButton";
 import { useSteps } from "../../context/StepContext";
-import { MealActions } from "../../utils/constants";
-import { Field, FieldArray, Form, Formik, withFormik } from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
@@ -17,16 +16,10 @@ type Ingredient = {
   unit: string;
 };
 
-type Meal = {
-  name: string;
-  ingredients: Ingredient[];
-  instructions: string;
-};
-
 const CustomMeal = () => {
   const { setCurrentMenuItem, currentMenuItem, setMenuItem } = useMenu();
   const [addingIngredient, setAddingIngredient] = useState(false);
-  const { setModalOpen, setCurrentStep } = useSteps();
+  const { closeModal, goBack } = useSteps();
 
   async function handleSave(values: any) {
     const response = await fetch("/api/meals", {
@@ -77,9 +70,10 @@ const CustomMeal = () => {
     <div className={"font-proxima"}>
       <div className={"flex flex-row items-center gap-2"}>
         {showBackButtonAndAddAsButton && (
-          <BackButton
-            onClick={() => setCurrentStep(MealActions.ADD_EDIT_MEAL)}
-          />
+          // <BackButton
+          //   onClick={() => setCurrentStep(MealActions.ADD_EDIT_MEAL)}
+          // />
+          <BackButton onClick={() => goBack()} />
         )}
         <h1 className={"font-bold text-3xl"}>Adding a new meal</h1>
       </div>
@@ -98,7 +92,7 @@ const CustomMeal = () => {
           },
         }}
         onSubmit={async (values) => {
-          setModalOpen(false);
+          closeModal();
         }}
       >
         {({

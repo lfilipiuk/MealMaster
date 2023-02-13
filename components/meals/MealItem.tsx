@@ -2,23 +2,18 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { useMenu } from "../../context/MenuContext";
+import { MealIdea } from "../../types/MealIdea";
 
 type Props = {
-  meal: {
-    name: string;
-    calories: number;
-    ingredients: string[];
-    instructions: string;
-  };
-  onSelectMeal: () => void;
+  meal: MealIdea;
+  onSelectMeal: (meal: MealIdea) => void;
 };
 
 const MealItem = ({ meal, onSelectMeal }: Props) => {
-  const mealsContext = useMenu();
-
   //this code is reused...
   const handleMealSelect = () => {
-    onSelectMeal();
+    console.log("meal selected");
+    onSelectMeal(meal);
   };
 
   return (

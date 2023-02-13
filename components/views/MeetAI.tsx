@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "./MeetAI.module.css";
 import BackButton from "../ui/buttons/BackButton";
 import { MealActions } from "../../utils/constants";
 import { useSteps } from "../../context/StepContext";
@@ -17,14 +16,13 @@ import { useChef } from "../../context/ChefContext";
 import { waitForTwoSeconds } from "../../utils/functions";
 
 const MeetAI = () => {
-  const { setCurrentStep } = useSteps();
+  const { setStep } = useSteps();
   const [isSearching, setIsSearching] = useState(false);
-  const { searchValue, setSearchValue, setMealIdeas } = useChef();
-  // const [input, setInput] = useState("");
+  const { setSearchValue, setMealIdeas } = useChef();
+  const { AI_MEAL_IDEAS } = MealActions;
 
   //TODO: remove it
   const [error, setError] = useState(false);
-  const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
 
   const submit = async (input: string) => {
@@ -47,15 +45,10 @@ const MeetAI = () => {
 
       const suggestion: { result: string } = await res.json();
 
-      //TODO: remove console.log
-      console.log("suggestion", suggestion);
       const { result } = suggestion;
       const resultWithoutNewLines = result.replace(/\n/g, " ");
       const parsedResult = JSON.parse(resultWithoutNewLines);
 
-      //TODO: remove console.log
-      console.log("result", parsedResult);
-      setSuggestion(parsedResult);
       setMealIdeas(parsedResult);
     } catch (e) {
       console.log(e);
@@ -83,12 +76,12 @@ const MeetAI = () => {
 
     await submit(values.meal);
 
-    setCurrentStep(MealActions.AI_MEAL_IDEAS);
+    setStep(AI_MEAL_IDEAS);
   };
 
   return (
     <>
-      <BackButton onClick={() => setCurrentStep(MealActions.ADD_EDIT_MEAL)} />
+      <BackButton />
       <div className={"flex flex-col items-center gap-2"}>
         <Image src={antonio} alt={"antonio"} width={250} quality={100} />
 

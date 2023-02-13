@@ -1,11 +1,11 @@
-import React, { createContext, useContext } from "react";
-import { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { DUMMY_IDEAS } from "../utils/DUMMY_IDEAS";
+import { MealIdea } from "../types/MealIdea";
 
 const ChefContext = createContext({
   searchValue: "",
   setSearchValue: (value: string) => {},
-  mealIdeas: [{ name: "", calories: 0, ingredients: [], instructions: "" }],
+  mealIdeas: {} as MealIdea[],
   setMealIdeas: (mealIdeas: any) => {},
 });
 

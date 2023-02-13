@@ -1,11 +1,14 @@
 import React from "react";
 import { useMenu } from "../../context/MenuContext";
 import Divider from "../ui/other/Divider";
+import { MenuItem } from "../../types/MenuItem";
 
 const Summary = () => {
   const { menuItems } = useMenu();
 
-  const filteredMenuItems = menuItems.filter((item) => item.name !== "");
+  const filteredMenuItems = menuItems.filter(
+    (item: MenuItem) => item.details.name !== ""
+  );
 
   return (
     <div>
@@ -14,7 +17,7 @@ const Summary = () => {
         {filteredMenuItems.map((item) => (
           <li key={item.type}>
             <Divider text={item.type} />
-            <h2 className={"text-lg"}>{item.name}</h2>
+            <h2 className={"text-lg"}>{item.details.name}</h2>
           </li>
         ))}
       </ul>

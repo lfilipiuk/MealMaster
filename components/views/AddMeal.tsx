@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MealItem from "../meals/MealItem";
 import CustomMealButton from "../ui/buttons/CustomMealButton";
 import OutOfMealIdeasButton from "../ui/buttons/OutOfMealIdeasButton";
@@ -15,8 +15,9 @@ type Props = {
 
 const AddMeal = ({ type, meals }: Props) => {
   const { menuItems } = useMenu();
-  const { setModalOpen, setCurrentStep } = useSteps();
+  const { setStep } = useSteps();
   const { setSelectedMeal } = useMeal();
+  const { SHOW_MEAL_DETAILS, ADD_CUSTOM_MEAL, CREATE_AI_MEAL } = MealActions;
 
   //this is code which decides title of modal: either add or edit
   const meal = menuItems.find((meal) => meal.type === type);
@@ -25,7 +26,7 @@ const AddMeal = ({ type, meals }: Props) => {
 
   const selectMealHandler = (meal: any) => {
     setSelectedMeal(meal);
-    setCurrentStep(MealActions.SHOW_MEAL_DETAILS);
+    setStep(SHOW_MEAL_DETAILS);
   };
 
   return (
@@ -49,15 +50,11 @@ const AddMeal = ({ type, meals }: Props) => {
               />
             ))}
         </div>
-        <CustomMealButton
-          onAddCustomMeal={() => setCurrentStep(MealActions.ADD_CUSTOM_MEAL)}
-        />
+        <CustomMealButton onAddCustomMeal={() => setStep(ADD_CUSTOM_MEAL)} />
 
         <div>
           <Divider text={"OR"} />
-          <OutOfMealIdeasButton
-            onOutOfIdeas={() => setCurrentStep(MealActions.CREATE_AI_MEAL)}
-          />
+          <OutOfMealIdeasButton onOutOfIdeas={() => setStep(CREATE_AI_MEAL)} />
         </div>
       </div>
     </div>

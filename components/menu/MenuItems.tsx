@@ -15,15 +15,10 @@ type Props = {
 
 const MenuItems = ({ showCalories, meals }: Props) => {
   const { removeMenuItem, setCurrentMenuItem } = useMenu();
-  const { setModalOpen, setCurrentStep } = useSteps();
+  const { setStep, openModal } = useSteps();
   const { user, error: userError, isLoading } = useUser();
   const { setSelectedMeal } = useMeal();
-
-  const handleAddEditMenu = (e: any) => {
-    e.stopPropagation();
-    setCurrentStep(MealActions.ADD_EDIT_MEAL);
-    setModalOpen(true);
-  };
+  const { ADD_EDIT_MEAL, SHOW_MEAL_IN_MENU } = MealActions;
 
   const handleRemoveMenu = (e: MouseEvent, type: string) => {
     e.stopPropagation();
@@ -32,22 +27,20 @@ const MenuItems = ({ showCalories, meals }: Props) => {
 
   const handleEditMenu = (e: MouseEvent, type: string) => {
     e.stopPropagation();
-    setCurrentStep(MealActions.ADD_EDIT_MEAL);
     setCurrentMenuItem(type);
-    setModalOpen(true);
+    setStep(ADD_EDIT_MEAL);
+    openModal();
   };
 
   const handleMenuItemClick = (e: MouseEvent, type: string, name: string) => {
     e.stopPropagation();
-    name !== ""
-      ? setCurrentStep(MealActions.SHOW_MEAL_IN_MENU)
-      : setCurrentStep(MealActions.ADD_EDIT_MEAL);
+    name !== "" ? setStep(SHOW_MEAL_IN_MENU) : setStep(ADD_EDIT_MEAL);
 
     const menuItem = meals.find((item: any) => item.type === type);
     setSelectedMeal(menuItem);
 
     setCurrentMenuItem(type);
-    setModalOpen(true);
+    openModal();
   };
 
   return (
