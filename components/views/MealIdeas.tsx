@@ -17,7 +17,6 @@ const MealIdeas = () => {
   console.log("steps", steps);
 
   const onSelectMeal = (meal: MealIdea) => {
-    console.log("clicked...");
     setStep(SHOW_MEAL_DETAILS);
     setSelectedMeal({ details: meal });
   };
@@ -25,7 +24,6 @@ const MealIdeas = () => {
   return (
     <div>
       <div className={"flex flex-row items-center gap-2"}>
-        {/*<BackButton onClick={() => goBack()} />*/}
         <BackButton />
         <h1
           className={"font-bold text-3xl"}

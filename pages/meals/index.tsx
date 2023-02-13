@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { GetStaticProps } from "next";
 import { getAllMeals } from "../../utils/mongo/api-util";
 import { ShowCaloriesToggle } from "../../components/menu/ShowCaloriesToggle";
@@ -12,12 +12,9 @@ import { useMeal } from "../../context/MealContext";
 
 export default function Meals({ data }: any) {
   const [showCalories, setShowCalories] = useState(false);
-  const { modalOpen, setModalOpen, setCurrentStep } = useSteps();
+  const { modalOpen, openModal, closeModal, setStep } = useSteps();
   const { selectedMeal, setSelectedMeal } = useMeal();
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const { ADD_CUSTOM_MEAL, SHOW_MEAL_IN_MENU } = MealActions;
 
   return (
     <>
@@ -81,8 +78,8 @@ export default function Meals({ data }: any) {
                       "border border-gray-300 shadow-lg rounded-full py-1 px-3 w-36"
                     }
                     onClick={() => {
-                      setCurrentStep(MealActions.ADD_CUSTOM_MEAL);
-                      setModalOpen(true);
+                      setStep(ADD_CUSTOM_MEAL);
+                      openModal();
                     }}
                   >
                     + New meal
@@ -103,9 +100,9 @@ export default function Meals({ data }: any) {
                           "flex flex-col gap-2 py-3 px-4 rounded-lg bg-white shadow-lg cursor-pointer"
                         }
                         onClick={() => {
-                          setCurrentStep(MealActions.SHOW_MEAL_IN_MENU);
+                          setStep(SHOW_MEAL_IN_MENU);
                           setSelectedMeal(item);
-                          setModalOpen(true);
+                          openModal();
                         }}
                       >
                         <div className={"flex items-center text-lg gap-2"}>
@@ -138,13 +135,12 @@ export default function Meals({ data }: any) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps = async () => {
   const meals = await getAllMeals();
 
   return {
     props: {
       data: meals,
     },
-    revalidate: 30,
   };
 };
