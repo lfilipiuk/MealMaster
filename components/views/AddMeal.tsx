@@ -39,7 +39,7 @@ const AddMeal = ({ type, meals }: Props) => {
         YOUR MEALS
       </h4>
       <div className={"flex flex-col justify-evenly"}>
-        <div className={"flex flex-col gap-4"}>
+        <div className={"flex flex-col gap-4 max-h-80 overflow-y-auto my-2"}>
           {meals &&
             meals.map((meal: any) => (
               <MealItem
@@ -48,10 +48,10 @@ const AddMeal = ({ type, meals }: Props) => {
                 onSelectMeal={() => selectMealHandler(meal)}
               />
             ))}
-          <CustomMealButton
-            onAddCustomMeal={() => setCurrentStep(MealActions.ADD_CUSTOM_MEAL)}
-          />
         </div>
+        <CustomMealButton
+          onAddCustomMeal={() => setCurrentStep(MealActions.ADD_CUSTOM_MEAL)}
+        />
 
         <div>
           <Divider text={"OR"} />

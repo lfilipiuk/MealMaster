@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import BackButton from "../ui/buttons/BackButton";
 import { useSteps } from "../../context/StepContext";
 import { MealActions } from "../../utils/constants";
-import { Field, FieldArray, Form, Formik } from "formik";
+import { Field, FieldArray, Form, Formik, withFormik } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { useMenu } from "../../context/MenuContext";
+import * as Yup from "yup";
 
 type Ingredient = {
   name: string;
@@ -40,11 +41,13 @@ const CustomMeal = () => {
           ingredients: values.ingredients,
           instructions: values.instructions,
         },
+        //TODO: type: "manual" or "ai", creator: "MEALMASTER" or user email
         created: "manual",
       }),
     });
 
     const meal = await response.json();
+    //TODO: add meal to menu
   }
 
   async function handleSaveAndAdd(values: any) {
@@ -61,13 +64,28 @@ const CustomMeal = () => {
     setCurrentMenuItem(currentMenuItem);
   }
 
+  const showBackButtonAndAddAsButton = currentMenuItem !== "";
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .trim()
+      .required("Name is required")
+      .max(40, "Name must be 40 characters or less"),
+  });
+
   return (
     <div className={"font-proxima"}>
       <div className={"flex flex-row items-center gap-2"}>
-        <BackButton onClick={() => setCurrentStep(MealActions.ADD_EDIT_MEAL)} />
+        {showBackButtonAndAddAsButton && (
+          <BackButton
+            onClick={() => setCurrentStep(MealActions.ADD_EDIT_MEAL)}
+          />
+        )}
         <h1 className={"font-bold text-3xl"}>Adding a new meal</h1>
       </div>
+
       <Formik
+        validationSchema={validationSchema}
         initialValues={{
           name: "",
           calories: 0,
@@ -83,7 +101,14 @@ const CustomMeal = () => {
           setModalOpen(false);
         }}
       >
-        {({ values, handleSubmit }) => (
+        {({
+          values,
+          handleSubmit,
+          errors,
+          touched,
+          validateForm,
+          setFieldError,
+        }) => (
           <Form onSubmit={handleSubmit}>
             <>
               <div className={"flex flex-row gap-2 justify-between pt-4"}>
@@ -92,9 +117,9 @@ const CustomMeal = () => {
                     Meal Name
                   </label>
                   <Field
-                    className={
-                      "w-full bg-white border-gray-300 border rounded-lg h-12 px-2 text-lg"
-                    }
+                    className={`w-full bg-white border-gray-300 border rounded-lg h-12 px-2 text-lg ${
+                      errors.name && touched.name ? "border-red-600" : ""
+                    }`}
                     name="name"
                     type="text"
                     placeholder="Type here..."
@@ -144,7 +169,7 @@ const CustomMeal = () => {
                     </div>
                     {!addingIngredient ? (
                       <button
-                        className={"flex gap-1 text-lg"}
+                        className={"flex gap-1 text-lg items-center"}
                         type={"button"}
                         onClick={() => setAddingIngredient(true)}
                       >
@@ -187,12 +212,13 @@ const CustomMeal = () => {
                           <option value="ml">tbsp</option>
                           <option value="glass">glass</option>
                         </Field>
+
                         <button
                           onClick={() => {
                             push({
                               name: values.newIngredient.name,
                               quantity: values.newIngredient.quantity,
-                              unit: values.newIngredient.unit,
+                              unit: values.newIngredient.unit || "pcs.",
                             });
                             values.newIngredient = {
                               name: "",
@@ -243,21 +269,39 @@ const CustomMeal = () => {
             </>
             <div className={"flex flex-row justify-between pt-4 gap-2"}>
               <button
-                onClick={() => handleSave(values)}
+                type="button"
                 className={
                   "border border-gray-200 w-1/2 h-12 rounded-lg font-semibold text-lg shadow-lg shadow-gray-200 hover:shadow-gray-300 transition duration-200 ease-in-out"
+                }
+                onClick={() =>
+                  validateForm().then((hasErrors) => {
+                    handleSubmit();
+                    if (Object.keys(hasErrors).length === 0) {
+                      handleSave(values);
+                    }
+                  })
                 }
               >
                 Save meal
               </button>
-              <button
-                onClick={() => handleSaveAndAdd(values)}
-                className={
-                  "w-1/2 h-12 bg-green rounded-lg font-semibold text-lg shadow-lg text-white hover:bg-green-dark transition duration-200 ease-in-out shadow-gray-200 hover:shadow-gray-300"
-                }
-              >
-                Save & add as {currentMenuItem}
-              </button>
+              {showBackButtonAndAddAsButton && (
+                <button
+                  type="button"
+                  className={
+                    "w-1/2 h-12 bg-green rounded-lg font-semibold text-lg shadow-lg text-white hover:bg-green-dark transition duration-200 ease-in-out shadow-gray-200 hover:shadow-gray-300"
+                  }
+                  onClick={() =>
+                    validateForm().then((hasErrors) => {
+                      handleSubmit();
+                      if (Object.keys(hasErrors).length === 0) {
+                        handleSaveAndAdd(values);
+                      }
+                    })
+                  }
+                >
+                  Save & add as {currentMenuItem}
+                </button>
+              )}
             </div>
           </Form>
         )}
