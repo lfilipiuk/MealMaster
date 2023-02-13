@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSteps } from "../../../context/StepContext";
 import { useMenu } from "../../../context/MenuContext";
 import AddMeal from "../../views/AddMeal";
@@ -17,14 +17,14 @@ type Props = {
 
 //ModalContent can be used to store selected meal details
 
-const ModalContent = ({ meals, menu }: Props) => {
-  const { currentStep, setCurrentStep, setModalOpen } = useSteps();
+const ModalContent = ({ meals }: Props) => {
+  const { getCurrentStep } = useSteps();
   const { currentMenuItem } = useMenu();
   const { selectedMeal } = useMeal();
 
   let content;
 
-  switch (currentStep) {
+  switch (getCurrentStep) {
     case MealActions.ADD_EDIT_MEAL:
       content = <AddMeal type={currentMenuItem} meals={meals} />;
       break;

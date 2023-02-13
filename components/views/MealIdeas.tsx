@@ -5,17 +5,28 @@ import { useSteps } from "../../context/StepContext";
 import { useChef } from "../../context/ChefContext";
 import MealItem from "../meals/MealItem";
 import ForwardButton from "../ui/buttons/ForwardButton";
+import { useMeal } from "../../context/MealContext";
+import { MealIdea } from "../../types/MealIdea";
 
 const MealIdeas = () => {
-  const { setCurrentStep } = useSteps();
+  const { setStep, steps } = useSteps();
   const { searchValue, mealIdeas } = useChef();
+  const { setSelectedMeal } = useMeal();
+  const { SHOW_MEAL_DETAILS, CREATE_AI_MEAL } = MealActions;
+
+  console.log("steps", steps);
+
+  const onSelectMeal = (meal: MealIdea) => {
+    console.log("clicked...");
+    setStep(SHOW_MEAL_DETAILS);
+    setSelectedMeal({ details: meal });
+  };
 
   return (
     <div>
       <div className={"flex flex-row items-center gap-2"}>
-        <BackButton
-          onClick={() => setCurrentStep(MealActions.CREATE_AI_MEAL)}
-        />
+        {/*<BackButton onClick={() => goBack()} />*/}
+        <BackButton />
         <h1
           className={"font-bold text-3xl"}
         >{`Meal ideas for “${searchValue}”`}</h1>
@@ -25,9 +36,8 @@ const MealIdeas = () => {
         {mealIdeas.map((meal) => (
           <MealItem
             key={meal.name}
-            name={meal.name}
-            kcal={meal.calories}
-            onSelectMeal={() => {}}
+            meal={meal}
+            onSelectMeal={(mealIdea) => onSelectMeal(mealIdea)}
           />
         ))}
       </div>
@@ -45,13 +55,13 @@ const MealIdeas = () => {
 
         <button
           onClick={() => {
-            setCurrentStep(MealActions.CREATE_AI_MEAL);
+            setStep(CREATE_AI_MEAL);
           }}
           className={
             "border-2 shadow-lg p-2 block w-full text-left rounded-lg flex items-center gap-2"
           }
         >
-          <BackButton onClick={() => {}} />
+          <BackButton />
           Change search
         </button>
       </div>

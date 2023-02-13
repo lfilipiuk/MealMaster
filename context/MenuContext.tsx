@@ -1,23 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { DUMMY_MENU } from "../utils/DUMMY_MENU";
 import { getStrippedDate } from "../utils/functions";
-
-export interface MenuItem {
-  type: string;
-  details: {
-    name: string;
-    calories: number;
-    ingredients: string[];
-    instructions: string;
-  };
-  icon?: string;
-}
-
-export interface MenuDay {
-  id: string;
-  date: string;
-  details: MenuItem[];
-}
+import { MenuItem } from "../types/MenuItem";
+import { MenuDay } from "../types/MenuDay";
 
 export interface MenuContextValue {
   menuDate: Date;
