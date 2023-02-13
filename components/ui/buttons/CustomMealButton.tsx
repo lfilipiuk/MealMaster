@@ -12,7 +12,7 @@ const CustomMealButton = ({ onAddCustomMeal }: Props) => {
     <div
       onClick={onAddCustomMeal}
       className={
-        "flex flex-row justify-between items-center bg-white p-3 rounded-lg border-gray-200 border shadow-xl cursor-pointer shadow-gray-200 hover:shadow-gray-300 transition-all duration-500 ease-in-out"
+        "my-2 flex flex-row justify-between items-center bg-white p-3 rounded-lg border-gray-200 border shadow-xl cursor-pointer shadow-gray-200 hover:shadow-gray-300 transition-all duration-500 ease-in-out"
       }
     >
       <div className={"flex gap-1 items-center"}>

@@ -35,7 +35,6 @@ export function MenuHeader(props: {
             <FontAwesomeIcon className={"pt-0.5"} icon={faCalendar} />
           </div>
         </div>
-
         <ShowCaloriesToggle
           onChange={props.onChange}
           checked={props.checked}

@@ -4,6 +4,10 @@ import "../styles/Calendar.css";
 import type { AppProps } from "next/app";
 import { MenuProvider } from "../context/MenuContext";
 import { AppStepProvider } from "../context/StepContext";
+
+//TODO: remove urql
+//TODO - introduce repository pattern
+
 import { Provider, createClient } from "urql";
 import { ChefProvider } from "../context/ChefContext";
 import { UserProvider } from "@auth0/nextjs-auth0/client";

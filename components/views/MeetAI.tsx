@@ -47,10 +47,13 @@ const MeetAI = () => {
 
       const suggestion: { result: string } = await res.json();
 
+      //TODO: remove console.log
       console.log("suggestion", suggestion);
       const { result } = suggestion;
       const resultWithoutNewLines = result.replace(/\n/g, " ");
       const parsedResult = JSON.parse(resultWithoutNewLines);
+
+      //TODO: remove console.log
       console.log("result", parsedResult);
       setSuggestion(parsedResult);
       setMealIdeas(parsedResult);

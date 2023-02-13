@@ -41,13 +41,12 @@ const ModalContent = ({ meals, menu }: Props) => {
       content = <MealIdeas />;
       break;
     case MealActions.SHOW_MEAL_IN_MENU:
-      const menuItem = menu.find((item: any) => item.type === currentMenuItem);
       content = (
         <MealDetails
-          name={menuItem.details.name}
-          calories={menuItem.details.calories}
-          ingredients={menuItem.details.ingredients}
-          instructions={menuItem.details.instructions}
+          name={selectedMeal.details.name}
+          calories={selectedMeal.details.calories}
+          ingredients={selectedMeal.details.ingredients as any}
+          instructions={selectedMeal.details.instructions}
         />
       );
       break;

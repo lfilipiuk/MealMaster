@@ -6,6 +6,7 @@ import { MealActions } from "../../utils/constants";
 import NewMenuItem from "./NewMenuItem";
 import SaveMenuButton from "./SaveMenuButton";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useMeal } from "../../context/MealContext";
 
 type Props = {
   showCalories: boolean;
@@ -16,6 +17,7 @@ const MenuItems = ({ showCalories, meals }: Props) => {
   const { removeMenuItem, setCurrentMenuItem } = useMenu();
   const { setModalOpen, setCurrentStep } = useSteps();
   const { user, error: userError, isLoading } = useUser();
+  const { setSelectedMeal } = useMeal();
 
   const handleAddEditMenu = (e: any) => {
     e.stopPropagation();
@@ -40,6 +42,10 @@ const MenuItems = ({ showCalories, meals }: Props) => {
     name !== ""
       ? setCurrentStep(MealActions.SHOW_MEAL_IN_MENU)
       : setCurrentStep(MealActions.ADD_EDIT_MEAL);
+
+    const menuItem = meals.find((item: any) => item.type === type);
+    setSelectedMeal(menuItem);
+
     setCurrentMenuItem(type);
     setModalOpen(true);
   };

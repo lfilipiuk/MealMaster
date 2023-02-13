@@ -1,0 +1,34 @@
+##Repository
+The repository pattern can be implemented in a Next.js application by creating a separate module or directory for the data access layer. Here's an example of how the repository pattern can be implemented in a Next.js app:
+
+    Create a repositories directory: In the root of your Next.js project, create a new directory called repositories.
+
+    Create a repository for each data model: Inside the repositories directory, create a new file for each data model that you want to interact with. For example, if you have a users model, you would create a users.js file.
+
+    Define the repository's interface: In each repository file, define the methods that will be used to interact with the data model. For example, a users repository might have methods for fetching all users, finding a single user by ID, creating a new user, and updating an existing user.
+
+    Implement the repository's methods: Using the API provided by Next.js or any other library you want, you would implement the methods defined in the repository's interface.
+
+    Use the repository in your Next.js pages or components: In your Next.js pages or components, you can import the repository and use its methods to interact with the data model.
+
+    You can also use the repository to handle the state and logic of the data, and expose only the needed methods to the pages or components.
+
+By following this structure, you can separate the data access layer from the rest of the application, making it more flexible and maintainable. Additionally, you can use the pattern to abstract the API calls and handle the errors and the state of the data in a centralize way.
+
+
+
+##Design patterns
+Design patterns are reusable solutions to common problems in software development. In API-driven apps, some common design patterns include:
+
+    Repository pattern: This pattern abstracts the data access layer and separates it from the business logic. It allows for a more flexible and maintainable codebase by encapsulating the data access logic.
+
+    Adapter pattern: This pattern allows for different API's to be used interchangeably, by providing a common interface to the client.
+
+    Singleton pattern: This pattern ensures that a class has only one instance, while providing a global access point to this instance. It can be useful when dealing with API clients, where a single client instance is used across the entire application.
+
+    Observer pattern: This pattern allows objects to be notified when changes occur in other objects, it's useful when dealing with real-time updates from API's.
+
+    Command pattern: This pattern encapsulates a request as an object, allowing for the execution of operations to be decoupled from the client. It's useful when dealing with complex API calls that need to be executed or undone.
+
+    Strategy pattern: This pattern allows for different algorithms to be used interchangeably, it's useful when dealing with different API's that have different authentication methods.
+
