@@ -15,16 +15,9 @@ import { DUMMY_MENU } from "../utils/DUMMY_MENU";
 import { LogoutButton } from "../components/ui/buttons/LogoutButton";
 const { AnimatePresence } = require("framer-motion");
 
-//FIXME: there is a problem, when I save the menu, new menus aren't fetched from the database
-//TODO: loading screen when fetching data from the database
 //TODO: login screen + ask for name (or get from Auth0)
-//TODO: make dots over the calendar
-//TODO: autosave + autoload
-//TODO: useMemo i useCallback
 //TODO: form display ingredients correctly
 //FIXME: when I add a new day, it overwrites the data
-//TODO: shopping list
-//TODO: have AI simplify shopping list on user request
 
 export default function Home({ data }: any) {
   const {
@@ -152,13 +145,13 @@ export default function Home({ data }: any) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+//FIXME - this shouldn't be static props...
+export const getServerSideProps = async () => {
   const meals = await getAllMeals();
 
   return {
     props: {
       data: meals,
     },
-    revalidate: 30,
   };
 };
