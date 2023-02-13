@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 export async function connectClient() {
+  //FIXME: Add env variable for MongoDB connection string
   const uri =
     "mongodb+srv://filluk:L10QtiezigvRvwJO@cluster0.xis9qpt.mongodb.net/?retryWrites=true&w=majority";
 
