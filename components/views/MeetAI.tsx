@@ -43,13 +43,16 @@ const MeetAI = () => {
         body: JSON.stringify({ input }),
       });
 
-      const suggestion: { result: string } = await res.json();
-
-      const { result } = suggestion;
-      const resultWithoutNewLines = result.replace(/\n/g, " ");
-      const parsedResult = JSON.parse(resultWithoutNewLines);
-
-      setMealIdeas(parsedResult);
+      try {
+        const suggestion: { result: string } = await res.json();
+        const { result } = suggestion;
+        const resultWithoutNewLines = result.replace(/\n/g, " ");
+        const parsedResult = JSON.parse(resultWithoutNewLines);
+        setMealIdeas(parsedResult);
+      } catch (e) {
+        console.log("Error parsing JSON: ", e);
+        console.log("Response: ", res);
+      }
     } catch (e) {
       console.log(e);
     } finally {
