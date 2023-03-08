@@ -73,5 +73,8 @@ export default async function handler(
     throw new Error("No suggestion found");
   }
 
-  await within(async () => ({ result: suggestion }), res, 120000);
+  const startIndex = suggestion.indexOf("[");
+  const formattedSuggestion = suggestion.substring(startIndex);
+
+  await within(async () => ({ result: formattedSuggestion }), res, 120000);
 }
