@@ -14,7 +14,7 @@ const MealIdeas = () => {
   const { setSelectedMeal } = useMeal();
   const { SHOW_MEAL_DETAILS, CREATE_AI_MEAL } = MealActions;
 
-  console.log("steps", steps);
+  // console.log("steps", steps);
 
   const onSelectMeal = (meal: MealIdea) => {
     setStep(SHOW_MEAL_DETAILS);

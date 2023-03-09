@@ -4,7 +4,7 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export function LogoutButton() {
   return (
-    <div className={"fixed right-10 bottom-10"}>
+    <div className={""}>
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
       <a
         className={

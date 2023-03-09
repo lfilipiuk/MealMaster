@@ -18,6 +18,8 @@ export interface MenuContextValue {
   setWholeMenu: (menu: MenuDay[]) => void;
   getMenuForDate: (date: Date) => { id: string; menu: MenuItem[] };
   getIdForDate: (date: Date) => string;
+  shouldReload: boolean;
+  setShouldReload: (shouldReload: boolean) => void;
 }
 
 const initialValue: MenuContextValue = {
@@ -34,6 +36,8 @@ const initialValue: MenuContextValue = {
   setWholeMenu: () => {},
   getMenuForDate: () => ({ id: "", menu: [] }),
   getIdForDate: () => "",
+  shouldReload: false,
+  setShouldReload: () => {},
 };
 
 export const MenuContext = createContext<MenuContextValue>(initialValue);
@@ -53,6 +57,7 @@ export function MenuProvider({ children }: Props) {
     initialValue.menuItems
   );
   const [currentMenuItem, setCurrentMenuItem] = useState<string>("");
+  const [shouldReload, setShouldReload] = useState<boolean>(false);
 
   //TODO: custom sort order for menu items
   function addMenuItem(meal: MenuItem) {
@@ -75,6 +80,7 @@ export function MenuProvider({ children }: Props) {
     });
 
     setMenuItems(newMenuItems);
+    setShouldReload(true);
   }
 
   function getMenuForDate(date: Date) {
@@ -105,7 +111,7 @@ export function MenuProvider({ children }: Props) {
     if (menuForDay) {
       return menuForDay.id;
     } else {
-      return "";
+      return null;
     }
   }
 
@@ -125,6 +131,8 @@ export function MenuProvider({ children }: Props) {
     setWholeMenu: setWholeMenu,
     getMenuForDate: getMenuForDate,
     getIdForDate: getIdForDate,
+    shouldReload: shouldReload,
+    setShouldReload: setShouldReload,
   };
 
   return <MenuContext.Provider value={value}>{children}</MenuContext.Provider>;

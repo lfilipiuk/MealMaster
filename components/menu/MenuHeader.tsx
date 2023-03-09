@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { ShowCaloriesToggle } from "./ShowCaloriesToggle";
 import React from "react";
+import { getFirstName, greetUserBasedOnTimeOfDay } from "../../utils/functions";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export function MenuHeader(props: {
   formattedDate: string;
@@ -10,14 +12,22 @@ export function MenuHeader(props: {
   disabled: boolean;
   onCalendarClick: () => void;
 }) {
+  const { user, error: userError, isLoading } = useUser();
+
+  const greeting = greetUserBasedOnTimeOfDay();
+
+  let firstName = "";
+  if (user) {
+    firstName = getFirstName(user.name);
+  }
+
   return (
     <>
       <h1
         className={"text-black font-proxima text-left font-bold text-3xl p-0"}
       >
-        Good morning, Łukasz
+        {greeting} {firstName}!
       </h1>
-
       <div
         className={
           "flex flex-row gap-4 items-end justify-between text-gray-500"
