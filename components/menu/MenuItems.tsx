@@ -62,7 +62,6 @@ const MenuItems = ({ showCalories, meals }: Props) => {
         ))}
       </ul>
       <NewMenuItem />
-      {user && <SaveMenuButton />}
     </>
   );
 };

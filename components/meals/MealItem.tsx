@@ -12,7 +12,7 @@ type Props = {
 const MealItem = ({ meal, onSelectMeal }: Props) => {
   //this code is reused...
   const handleMealSelect = () => {
-    console.log("meal selected");
+    //console.log("meal selected");
     onSelectMeal(meal);
   };
 

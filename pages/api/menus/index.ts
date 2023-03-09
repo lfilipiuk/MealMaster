@@ -27,13 +27,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "POST") {
       // Add a new meal
-      const { id, menu, userId, date } = req.body;
+      const { menu, userId, date } = req.body;
 
       // Create or update a meal
-      const filter = id ? { _id: new ObjectId(id) } : {};
+      const filter = { userId: userId, date: date };
       const update = { $set: { userId: userId, date: date, menu: menu } };
       const options = { upsert: true };
-
       const result = await collection.updateOne(filter, update, options);
 
       res.status(201).json(result);

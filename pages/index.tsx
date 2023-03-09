@@ -1,82 +1,24 @@
 import Head from "next/head";
-import MenuItems from "../components/menu/MenuItems";
-import { useSteps } from "../context/StepContext";
-import SummaryButton from "../components/ui/buttons/SummaryButton";
-import Modal from "../components/ui/modal/Modal";
-import ModalContent from "../components/ui/modal/ModalContent";
-import Calendar from "../components/calendar/Calendar";
-import { MenuHeader } from "../components/menu/MenuHeader";
-import React, { useEffect, useState } from "react";
-import { useMenu } from "../context/MenuContext";
+import React, { useEffect } from "react";
+import Link from "next/link";
+import LoginButton from "../components/login/LoginButton";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { GetStaticProps } from "next";
-import { getAllMeals } from "../utils/mongo/api-util";
-import { DUMMY_MENU } from "../utils/DUMMY_MENU";
-import { LogoutButton } from "../components/ui/buttons/LogoutButton";
-const { AnimatePresence } = require("framer-motion");
+import { useRouter } from "next/router";
 
 //TODO: login screen + ask for name (or get from Auth0)
 //TODO: form display ingredients correctly
 //FIXME: when I add a new day, it overwrites the data
 
-export default function Home({ data }: any) {
-  const {
-    menuDate,
-    setMenuDate,
-    setMenuItems,
-    menuItems,
-    setWholeMenu,
-    getMenuForDate,
-  } = useMenu();
-  const { modalOpen, closeModal, steps } = useSteps();
-  const [showCalories, setShowCalories] = useState(false);
+export default function Landing() {
   const { user, error: userError, isLoading } = useUser();
-  const [calendarOpen, setCalendarOpen] = useState(false);
-
-  const formattedDate = menuDate.toDateString();
+  const router = useRouter();
 
   useEffect(() => {
-    async function fetchMenus() {
-      const res = await fetch(`/api/menus/${user?.email}`);
-      const data = await res.json();
-
-      if (data && data.length > 0) {
-        //map menu to array
-        const mappedMenu = data.map((menu: any) => {
-          return {
-            id: menu._id,
-            date: menu.date,
-            menu: menu.menu,
-          };
-        });
-        setWholeMenu(mappedMenu);
-
-        //get menu for current date
-        //FIXME: im getting menu for date here and in useEffect below
-        // there should be one function for that
-        const menuForDate = mappedMenu.find(
-          (menu: any) => menu.date === formattedDate
-        );
-        if (menuForDate) {
-          setMenuItems(menuForDate.menu);
-        } else {
-          setMenuItems(DUMMY_MENU);
-        }
-
-        return data;
-      }
-
-      return data;
-    }
-
     if (user) {
-      fetchMenus().then(() => {});
+      //navigate to home
+      router.push("/home");
     }
   }, [user]);
-
-  useEffect(() => {
-    setMenuItems(getMenuForDate(menuDate).menu);
-  }, [menuDate]);
 
   return (
     <>
@@ -87,71 +29,13 @@ export default function Home({ data }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/*//This is only for development purposes*/}
-      <div className={"fixed left-0 top-0"}>
-        <ol>
-          {steps.map((step) => {
-            return <li key={step}>{step}</li>;
-          })}
-        </ol>
+      <div>
+        <h1>MealMaster</h1>
+        <p>Meal planning made easy</p>
       </div>
 
-      <div className={"max-w-lg mx-auto my-16 flex flex-col"}>
-        <MenuHeader
-          formattedDate={formattedDate}
-          onChange={() => setShowCalories(!showCalories)}
-          checked={showCalories}
-          disabled={modalOpen}
-          onCalendarClick={() => setCalendarOpen(true)}
-        />
-
-        <AnimatePresence>
-          {calendarOpen && (
-            <Calendar onClose={() => setCalendarOpen(false)} value={menuDate} />
-          )}
-        </AnimatePresence>
-        <MenuItems showCalories={showCalories} meals={menuItems} />
-
-        {/* TODO: buttons in a relative/absolute section */}
-        {!modalOpen && (
-          <>
-            <LogoutButton /> <SummaryButton />
-          </>
-        )}
-      </div>
-
-      <div className={"h-full w-screen"}>
-        <AnimatePresence>
-          {modalOpen && (
-            <Modal handleClose={closeModal}>
-              <ModalContent meals={data} menu={menuItems} />
-            </Modal>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <div className={"flex gap-2"}>
-        {!user && (
-          // eslint-disable-next-line @next/next/no-html-link-for-pages
-          <a
-            className={"p-2 w-16 bg-green text-white rounded-sm text-center"}
-            href="/api/auth/login"
-          >
-            Login
-          </a>
-        )}
-      </div>
+      <Link href={"/home"}>Start planning</Link>
+      <LoginButton />
     </>
   );
 }
-
-//FIXME - this shouldn't be static props...
-export const getServerSideProps = async () => {
-  const meals = await getAllMeals();
-
-  return {
-    props: {
-      data: meals,
-    },
-  };
-};

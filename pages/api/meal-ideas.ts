@@ -67,7 +67,7 @@ export default async function handler(
 
   const suggestion = response.data?.choices?.[0]?.message?.content;
 
-  console.log(suggestion);
+  //console.log(suggestion);
 
   if (suggestion === undefined) {
     throw new Error("No suggestion found");
