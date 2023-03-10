@@ -148,6 +148,16 @@ export default function Landing() {
             </div>
           </div>
         </div>
+
+        {/*Gray Section*/}
+        <div
+          className={
+            "w-full h-screen flex flex-col items-center my-16 bg-[#010F18] bg-opacity-5"
+          }
+        >
+          <div className={"max-w-5xl w-full p-5"}></div>
+          jjj
+        </div>
       </div>
     </>
   );
