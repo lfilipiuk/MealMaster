@@ -10,11 +10,14 @@ import mockupImage from "../public/images/mockup.png";
 import outOfIdeasImage from "../public/images/outofideas.png";
 import ownRecipesImage from "../public/images/ownrecipes.png";
 import mealScheduleImage from "../public/images/mealschedule.png";
+import chefImage from "../public/images/chef landing.png";
+import LandingAIForm from "../components/landing/LandingAIForm";
 
 //TODO: form display ingredients correctly
 export default function Landing() {
   const { user, error: userError, isLoading } = useUser();
   const router = useRouter();
+  const [mealInput, setMealInput] = React.useState("");
 
   useEffect(() => {
     if (user) {
@@ -162,10 +165,68 @@ export default function Landing() {
             "w-full h-screen flex flex-col items-center my-16 bg-[#010F18] bg-opacity-5"
           }
         >
-          <div className={"xl:max-w-7xl max-w-5xl w-full p-5 flex"}>
-            <div className={"basis-1/3"}>TRY IT OUT</div>
-            <div className={"basis-1/3"}>FORM</div>
-            <div className={"basis-1/3"}>AI IMAGE</div>
+          <div className={"xl:max-w-7xl max-w-5xl w-full p-5 flex py-20 gap-4"}>
+            <div className={"basis-1/3"}>
+              <h2
+                className={
+                  "font-proxima opacity-40 font-semibold uppercase tracking-wider"
+                }
+              >
+                Try it yourself
+              </h2>
+              <h1 className={"font-bold text-3xl"}>
+                Meet Alex Ingredient, our chef
+              </h1>
+              <p className={"my-2 flex flex-col gap-5 opacity-60"}>
+                <span>
+                  Get a taste of how mealmaster uses AI to come up with
+                  delicious recipes. Give it a shot!
+                </span>
+                <span>
+                  Enter what you&apos;d like to eat, and Alex will come up with
+                  some suggestions.
+                </span>{" "}
+                <span>Like what you see?</span>
+              </p>
+              <LoginButton text={"Join mealmaster"} secondary />
+            </div>
+
+            {/*Meal Input*/}
+            <div className={"basis-1/3"}>
+              <LandingAIForm />
+
+              {/*<div*/}
+              {/*  className={*/}
+              {/*    "bg-white shadow-xl border border-gray-200 w-full h-full rounded-xl p-3"*/}
+              {/*  }*/}
+              {/*>*/}
+              {/*  <div*/}
+              {/*    className={*/}
+              {/*      "w-full h-12 border border-gray-200 px-4 flex items-center justify-center"*/}
+              {/*    }*/}
+              {/*  >*/}
+              {/*    <input*/}
+              {/*      className={"w-full pr-4"}*/}
+              {/*      placeholder={"What would you like to eat?"}*/}
+              {/*      value={mealInput}*/}
+              {/*      onChange={(e) => setMealInput(e.target.value)}*/}
+              {/*    />*/}
+              {/*    {mealInput.length > 0 && <button>Generate</button>}*/}
+              {/*  </div>*/}
+
+              {/*  <p className={"text-sm opacity-50 text-center px-4 my-2"}>*/}
+              {/*    Alex understands everything, from simple cues to comples*/}
+              {/*    demands. Try stuff like: &quot;breakfast&quot;, &quot;asian*/}
+              {/*    soup&quot;, &quot;dinner meal with steak&quot;, &quot;healthy*/}
+              {/*    snack&quot;.*/}
+              {/*  </p>*/}
+              {/*</div>*/}
+            </div>
+
+            {/*Chef Image*/}
+            <div className={"basis-1/3"}>
+              <Image src={chefImage} alt={"chef"} width={700} height={700} />
+            </div>
           </div>
         </div>
       </div>
