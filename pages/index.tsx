@@ -279,7 +279,7 @@ export default function Landing() {
               />
             </div>
           </div>
-          <div className={"pt-80 my-10 opacity-60"}>
+          <div className={"mt-72 my-10 opacity-60"}>
             <h1>
               mealmaster 2023, made by{" "}
               <Link
