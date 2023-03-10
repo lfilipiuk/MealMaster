@@ -28,7 +28,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
       // Add a new meal
       const { menu, userId, date } = req.body;
-
       // Create or update a meal
       const filter = { userId: userId, date: date };
       const update = { $set: { userId: userId, date: date, menu: menu } };

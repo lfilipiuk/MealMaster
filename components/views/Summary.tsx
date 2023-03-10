@@ -16,12 +16,13 @@ const Summary = () => {
       <ul>
         {filteredMenuItems.map((item) => (
           <li key={item.type}>
-            <Divider text={item.type} />
-            <h2 className={"text-lg"}>{item.details.name}</h2>
+            {/*<Divider text={item.type} />*/}
+            <h2 className={"text-lg"}>- {item.details.name}</h2>
           </li>
         ))}
       </ul>
       <h1 className={"font-bold text-2xl my-3"}>Shopping List</h1>
+      <h2 className={"text-3xl text-center"}>Coming soon...</h2>
     </div>
   );
 };

@@ -93,13 +93,13 @@ const MeetAI = () => {
             <>
               <h1 className={"text-2xl font-bold"}>
                 {!isSearching
-                  ? "Meet Antonio Ingrediente, our chef"
+                  ? "Meet Alex Ingredient, our chef"
                   : `Looking for '${values.meal}' ideas...`}
               </h1>
               <h2 className={"mx-12 text-gray-500 text-center"}>
                 {!isSearching
-                  ? "Antonio is an A.I. powered chef that's always ready to share his meal ideas & recipes with you. Seriously, try him!"
-                  : "It might take Antonio up to 10-20 seconds to come up with an idea for you. Let's not rush a master at work!"}
+                  ? "Alex is an A.I. powered chef that's always ready to share his meal ideas & recipes with you. Seriously, try him!"
+                  : "It might take Antonio up to 1 minute to come up with an idea for you. Let's not rush a master at work!"}
               </h2>
 
               <Form
@@ -134,7 +134,7 @@ const MeetAI = () => {
         </Formik>
         {!isSearching && (
           <h3 className={"text-gray-400 text-sm text-center"}>
-            Antonio understands everything, from simple cues to complex demands.
+            Alex understands everything, from simple cues to complex demands.
             Try stuff like: “breakfast”, “asian soup”, “dinner meal with steak”,
             “healthy snack”.
           </h3>
