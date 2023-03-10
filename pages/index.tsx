@@ -124,7 +124,7 @@ export default function Landing() {
                     width={700}
                     quality={100}
                   />
-                  <h2 className={"font-bol text-lgd"}>
+                  <h2 className={"font-bold text-lg"}>
                     Add your own meals and recipes
                   </h2>
                   <p className={"opacity-60 my-2 text-lg"}>
@@ -162,7 +162,11 @@ export default function Landing() {
             "w-full h-screen flex flex-col items-center my-16 bg-[#010F18] bg-opacity-5"
           }
         >
-          <div className={"max-w-5xl w-full p-5"}></div>
+          <div className={"xl:max-w-7xl max-w-5xl w-full p-5 flex"}>
+            <div className={"basis-1/3"}>TRY IT OUT</div>
+            <div className={"basis-1/3"}>FORM</div>
+            <div className={"basis-1/3"}>AI IMAGE</div>
+          </div>
         </div>
       </div>
     </>
