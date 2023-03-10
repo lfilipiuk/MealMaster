@@ -42,11 +42,11 @@ export default function Landing() {
           }}
           className="w-full h-[30em] rounded-bl-[5em] flex justify-center"
         >
-          <div className={"max-w-5xl w-full p-5"}>
+          <div className={"xl:max-w-7xl max-w-5xl w-full p-5"}>
             <Image
               src={mealmasterLogo}
               alt={"mealmaster logo"}
-              width={100}
+              width={150}
               height={100}
             />
 
@@ -71,7 +71,9 @@ export default function Landing() {
 
               <div className={"basis-2/3 relative"}>
                 <Image
-                  className={"absolute translate-y-10 translate-x-10 scale-110"}
+                  className={
+                    "absolute xl:translate-y-0 translate-y-10 translate-x-10 scale-110"
+                  }
                   src={mockupImage}
                   alt={
                     "screen showing mealmaster on a computer screen and phone screen"
@@ -85,8 +87,12 @@ export default function Landing() {
         </div>
 
         {/*White Section*/}
-        <div className={"w-full h-screen flex flex-col items-center my-16"}>
-          <div className={"max-w-5xl w-full p-5"}>
+        <div
+          className={
+            "w-full h-screen flex flex-col items-center my-16 xl:mt-32"
+          }
+        >
+          <div className={"xl:max-w-7xl max-w-5xl w-full p-5"}>
             <h1 className={"text-3xl font-bold"}>How it works</h1>
 
             <div className={"flex flex-row w-full gap-3"}>
@@ -94,16 +100,16 @@ export default function Landing() {
               <div className={"flex flex-row gap-10 w-full basis-1/3"}>
                 <div className={"flex flex-col justify-start"}>
                   <Image
-                    className={
-                      "my-10 shadow-lg rounded-xl hover:scale-125 transition-all duration-300 ease-in-out hover:z-10"
-                    }
+                    className={"my-10 shadow-lg rounded-xl"}
                     src={mealScheduleImage}
                     alt={"choose your meal schedule"}
                     width={700}
                     quality={100}
                   />
-                  <h2 className={"font-bold"}>Choose your meal schedule</h2>
-                  <p className={"opacity-60 my-2"}>
+                  <h2 className={"font-bold text-lg"}>
+                    Choose your meal schedule
+                  </h2>
+                  <p className={"opacity-60 my-2 text-lg"}>
                     Some text some text some text some text
                   </p>
                 </div>
@@ -112,16 +118,16 @@ export default function Landing() {
               <div className={"flex flex-row gap-10 w-full basis-1/3"}>
                 <div className={"flex flex-col justify-start"}>
                   <Image
-                    className={
-                      "my-10 shadow-lg rounded-xl hover:scale-125 transition-all duration-300 ease-in-out hover:z-10"
-                    }
+                    className={"my-10 shadow-lg rounded-xl"}
                     src={ownRecipesImage}
                     alt={"choose your meal schedule"}
                     width={700}
                     quality={100}
                   />
-                  <h2 className={"font-bold"}>Choose your meal schedule</h2>
-                  <p className={"opacity-60 my-2"}>
+                  <h2 className={"font-bol text-lgd"}>
+                    Add your own meals and recipes
+                  </h2>
+                  <p className={"opacity-60 my-2 text-lg"}>
                     Some text some text some text some text
                   </p>
                 </div>
@@ -131,16 +137,17 @@ export default function Landing() {
               <div className={"flex flex-row gap-10 w-full basis-1/3"}>
                 <div className={"flex flex-col justify-start"}>
                   <Image
-                    className={
-                      "my-10 shadow-lg rounded-xl hover:scale-125 transition-all duration-300 ease-in-out hover:z-10"
-                    }
+                    className={"my-10 shadow-lg rounded-xl"}
                     src={outOfIdeasImage}
                     alt={"choose your meal schedule"}
                     width={700}
                     quality={100}
+                    text-lg
                   />
-                  <h2 className={"font-bold"}>Choose your meal schedule</h2>
-                  <p className={"opacity-60 my-2"}>
+                  <h2 className={"font-bold text-lg"}>
+                    Out of ideas? AI is here to help!
+                  </h2>
+                  <p className={"opacity-60 my-2 text-lg"}>
                     Some text some text some text some text
                   </p>
                 </div>
@@ -156,7 +163,6 @@ export default function Landing() {
           }
         >
           <div className={"max-w-5xl w-full p-5"}></div>
-          jjj
         </div>
       </div>
     </>
