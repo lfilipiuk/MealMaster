@@ -13,6 +13,13 @@ import mealScheduleImage from "../public/images/mealschedule.png";
 import chefImage from "../public/images/chef landing.png";
 import LandingAIForm from "../components/landing/LandingAIForm";
 
+import iconCucumber from "../public/images/icon-cucumber.png";
+import iconBanana from "../public/images/icon-banana.png";
+import iconCarrot from "../public/images/icon-carrot.png";
+import iconChocolate from "../public/images/icon-chocolate.png";
+import iconCookie from "../public/images/icon-cookie.png";
+import iconPizza from "../public/images/icon-pizza.png";
+
 //TODO: form display ingredients correctly
 export default function Landing() {
   const { user, error: userError, isLoading } = useUser();
@@ -162,7 +169,7 @@ export default function Landing() {
         {/*Gray Section*/}
         <div
           className={
-            "w-full h-screen flex flex-col items-center my-16 bg-[#010F18] bg-opacity-5"
+            "w-full h-screen flex flex-col items-center my-16 bg-[#010F18] bg-opacity-5 pb-32"
           }
         >
           <div className={"xl:max-w-7xl max-w-5xl w-full p-5 flex py-20 gap-4"}>
@@ -194,39 +201,94 @@ export default function Landing() {
             {/*Meal Input*/}
             <div className={"basis-1/3"}>
               <LandingAIForm />
-
-              {/*<div*/}
-              {/*  className={*/}
-              {/*    "bg-white shadow-xl border border-gray-200 w-full h-full rounded-xl p-3"*/}
-              {/*  }*/}
-              {/*>*/}
-              {/*  <div*/}
-              {/*    className={*/}
-              {/*      "w-full h-12 border border-gray-200 px-4 flex items-center justify-center"*/}
-              {/*    }*/}
-              {/*  >*/}
-              {/*    <input*/}
-              {/*      className={"w-full pr-4"}*/}
-              {/*      placeholder={"What would you like to eat?"}*/}
-              {/*      value={mealInput}*/}
-              {/*      onChange={(e) => setMealInput(e.target.value)}*/}
-              {/*    />*/}
-              {/*    {mealInput.length > 0 && <button>Generate</button>}*/}
-              {/*  </div>*/}
-
-              {/*  <p className={"text-sm opacity-50 text-center px-4 my-2"}>*/}
-              {/*    Alex understands everything, from simple cues to comples*/}
-              {/*    demands. Try stuff like: &quot;breakfast&quot;, &quot;asian*/}
-              {/*    soup&quot;, &quot;dinner meal with steak&quot;, &quot;healthy*/}
-              {/*    snack&quot;.*/}
-              {/*  </p>*/}
-              {/*</div>*/}
             </div>
 
             {/*Chef Image*/}
             <div className={"basis-1/3"}>
               <Image src={chefImage} alt={"chef"} width={700} height={700} />
             </div>
+          </div>
+        </div>
+
+        {/*White Section*/}
+        <div
+          className={"w-full flex flex-col items-center  bg-opacity-5 relative"}
+        >
+          <div
+            className={
+              "xl:max-w-7xl max-w-5xl w-full p-5 rounded-xl bg-gradient-to-r from-[#021F31] to-[#03314E] h-80 flex absolute -top-40"
+            }
+          >
+            <div className={"basis-1/3 relative"}>
+              <Image
+                className={"absolute -bottom-10 right-10"}
+                src={iconChocolate}
+                alt={"chocolate"}
+                width={100}
+                height={100}
+              />
+              <Image
+                className={"absolute bottom-0 left-0"}
+                src={iconCarrot}
+                alt={"carrot"}
+                width={100}
+                height={100}
+              />
+              <Image
+                className={"absolute top-0 left-10"}
+                src={iconCookie}
+                alt={"cookie"}
+                width={100}
+                height={100}
+              />
+            </div>
+            <div
+              className={
+                "basis-1/3 flex  flex-col text-center justify-center items-center gap-5"
+              }
+            >
+              <h1 className={"text-3xl font-bold text-white"}>
+                Take your meal planning to the next level
+              </h1>
+              <p className={"text-white text-lg opacity-80"}>
+                Give mealmaster a shot for free today!
+              </p>
+              <LoginButton text={"Join mealmaster"} />
+            </div>
+            <div className={"basis-1/3 relative"}>
+              <Image
+                className={"absolute -bottom-10 right-0"}
+                src={iconCucumber}
+                alt={"cucumber"}
+                width={100}
+                height={100}
+              />
+              <Image
+                className={"absolute bottom-0 left-0 top-1/2"}
+                src={iconPizza}
+                alt={"pizza"}
+                width={100}
+                height={100}
+              />
+              <Image
+                className={"absolute top-0 left-1/2"}
+                src={iconBanana}
+                alt={"banana"}
+                width={100}
+                height={100}
+              />
+            </div>
+          </div>
+          <div className={"pt-80 my-10 opacity-60"}>
+            <h1>
+              mealmaster 2023, made by{" "}
+              <Link
+                className={"font-semibold"}
+                href={"https://www.lukaszfilipiuk.com"}
+              >
+                Łukasz Filipiuk
+              </Link>
+            </h1>
           </div>
         </div>
       </div>
