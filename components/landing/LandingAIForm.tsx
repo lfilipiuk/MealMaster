@@ -1,11 +1,12 @@
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  Form,
+  Formik,
+  FormikHelpers,
+  useFormikContext,
+} from "formik";
 import React, { useState } from "react";
-import { useSteps } from "../../context/StepContext";
-import { useChef } from "../../context/ChefContext";
-import { MealActions } from "../../utils/constants";
-import BackButton from "../ui/buttons/BackButton";
-import Image from "next/image";
-import antonio from "../../public/images/chef large.png";
 
 const LandingAIForm = () => {
   const [isSearching, setIsSearching] = useState(false);
@@ -13,6 +14,15 @@ const LandingAIForm = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [mealIdeas, setMealIdeas] = useState([""]);
+  // const { resetForm } = useFormikContext();
+
+  const reset = () => {
+    setIsSearching(false);
+    setError(false);
+    setLoading(false);
+    setMealIdeas([""]);
+    // resetForm();
+  };
 
   const submit = async (input: string) => {
     //Check if character limit is exceeded
@@ -65,7 +75,7 @@ const LandingAIForm = () => {
         }
       >
         <Formik initialValues={{ meal: "" }} onSubmit={handleSubmit}>
-          {({ values, isSubmitting }) => (
+          {({ values, isSubmitting, resetForm }) => (
             <>
               <Form
                 className={`w-full relative ${
@@ -74,10 +84,11 @@ const LandingAIForm = () => {
               >
                 <Field
                   className={
-                    "w-11/12 bg-white border border-gray-600 text-sm rounded-lg block mx-auto pr-20"
+                    "w-full bg-white border border-gray-600 text-sm rounded-lg block mx-auto pr-20"
                   }
                   name="meal"
                   type="text"
+                  autoComplete="off"
                   placeholder="What would you like to eat?"
                   maxLength={50}
                 />
@@ -95,39 +106,58 @@ const LandingAIForm = () => {
                   </button>
                 )}
               </Form>
+              {!isSearching && (
+                <h3 className={"text-sm opacity-50 text-center px-4"}>
+                  Alex understands everything, from simple cues to complex
+                  demands. Try stuff like: “breakfast”, “asian soup”, “dinner
+                  meal with steak”, “healthy snack”.
+                </h3>
+              )}
+              {/*  Suggestions */}
+              <div
+                className={
+                  "flex flex-col items-center justify-center h-full w-full"
+                }
+              >
+                {mealIdeas.length > 1 ? (
+                  <div className={"flex flex-col items-center gap-2 w-full"}>
+                    <h1>Here are some ideas for you:</h1>
+                    {mealIdeas.map((meal: any, index: number) => (
+                      <div
+                        key={index}
+                        className={"text-sm bg-gray-100 p-2 rounded-lg w-full"}
+                      >
+                        {meal}
+                      </div>
+                    ))}
+                    <button
+                      className={
+                        "bg-green py-2 px-4 text-white rounded-full font-semibold hover:-translate-y-0.5 transform transition duration-200 ease-in-out"
+                      }
+                      onClick={() => {
+                        reset();
+                        resetForm();
+                      }}
+                    >
+                      Try again
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    {loading && (
+                      <p className={"text-sm opacity-50"}>Loading...</p>
+                    )}
+                    {!loading && (
+                      <p className={"text-sm opacity-50"}>
+                        Suggestions will appear here
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
             </>
           )}
         </Formik>
-        {!isSearching && (
-          <h3 className={"text-sm opacity-50 text-center px-4"}>
-            Alex understands everything, from simple cues to complex demands.
-            Try stuff like: “breakfast”, “asian soup”, “dinner meal with steak”,
-            “healthy snack”.
-          </h3>
-        )}
-        {/*  Suggestions */}
-        <div
-          className={"flex flex-col items-center justify-center h-full w-full"}
-        >
-          {mealIdeas.length > 1 ? (
-            <div className={"flex flex-col items-center gap-2 w-full"}>
-              {mealIdeas.map((meal: any, index: number) => (
-                <div
-                  key={index}
-                  className={"text-sm bg-gray-100 p-2 rounded-lg w-full"}
-                >
-                  {meal}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div>
-              <p className={"text-sm opacity-50"}>
-                Suggestions will appear here
-              </p>
-            </div>
-          )}
-        </div>
       </div>
     </>
   );
