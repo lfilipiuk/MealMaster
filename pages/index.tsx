@@ -205,7 +205,7 @@ export default function Landing() {
               <LoginButton text={"Join mealmaster"} secondary />
             </div>
 
-            <div className={"flex-1"}>
+            <div className={"flex-1 w-full"}>
               <LandingAIForm />
             </div>
 
