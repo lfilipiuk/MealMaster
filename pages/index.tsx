@@ -179,8 +179,8 @@ export default function Landing() {
             "w-full h-full flex flex-col items-center my-16 bg-[#010F18] bg-opacity-5 pb-32"
           }
         >
-          <div className="xl:max-w-7xl lg:max-w-5xl max-w-xl lg:h-full h-[150vh] p-5 flex lg:flex-row flex-col py-20 gap-4 items-center">
-            <div className={"flex-1"}>
+          <div className="xl:max-w-7xl lg:max-w-5xl max-w-xl lg:h-full h-[150vh] p-5 flex lg:flex-row flex-col py-20 gap-4 items-center justify-center">
+            <div className={"flex-1 basis-1/3"}>
               <h2
                 className={
                   "font-proxima opacity-40 font-semibold uppercase tracking-wider"
@@ -205,11 +205,11 @@ export default function Landing() {
               <LoginButton text={"Join mealmaster"} secondary />
             </div>
 
-            <div className={"flex-1 w-full"}>
+            <div className={"flex-1 basis-1/3 h-80"}>
               <LandingAIForm />
             </div>
 
-            <div className={"flex-1"}>
+            <div className={"flex-1 basis-1/3"}>
               <Image src={chefImage} alt={"chef"} width={300} height={300} />
             </div>
           </div>

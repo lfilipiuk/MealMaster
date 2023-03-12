@@ -92,15 +92,6 @@ export default function Home({ data }: any) {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      {/*//This is only for development purposes*/}
-      {/*<div className={"fixed left-0 top-0"}>*/}
-      {/*  <ol>*/}
-      {/*    {steps.map((step) => {*/}
-      {/*      return <li key={step}>{step}</li>;*/}
-      {/*    })}*/}
-      {/*  </ol>*/}
-      {/*</div>*/}
-
       <div className={"max-w-lg mx-auto my-16 flex flex-col"}>
         <MenuHeader
           formattedDate={formattedDate}
