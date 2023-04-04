@@ -10,10 +10,8 @@ import React, { useEffect, useState } from "react";
 import { useMenu } from "../../context/MenuContext";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAllMeals } from "../../utils/mongo/api-util";
-import { DUMMY_MENU } from "../../utils/DUMMY_MENU";
 import { LogoutButton } from "../../components/ui/buttons/LogoutButton";
 import LoginButton from "../../components/login/LoginButton";
-import { UserProfileButton } from "../../components/ui/buttons/UserProfileButton";
 import { fetchMenus, saveAndLoadMenus } from "../../utils/api/functions";
 const { AnimatePresence } = require("framer-motion");
 
@@ -106,7 +104,10 @@ export default function Home({ data }: any) {
             <Calendar onClose={() => setCalendarOpen(false)} value={menuDate} />
           )}
         </AnimatePresence>
-        <MenuItems showCalories={showCalories} meals={menuItems} />
+
+        {menuItems && (
+          <MenuItems showCalories={showCalories} meals={menuItems} />
+        )}
 
         {/* TODO: buttons in a relative/absolute section */}
         {!modalOpen && (

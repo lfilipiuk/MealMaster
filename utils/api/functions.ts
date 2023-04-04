@@ -51,8 +51,8 @@ export async function fetchMenus(userEmail: any, menuDate: any) {
     //console.log("fetchMenus", menuItems, mappedMenu);
     return { menuItems, mappedMenu };
   }
-  // console.log("fetchMenus", "EMPTY");
-  return {};
+  //console.log("fetchMenus", DUMMY_MENU, []);
+  return { menuItems: DUMMY_MENU, mappedMenu: [] };
 }
 
 export async function saveAndLoadMenus(
